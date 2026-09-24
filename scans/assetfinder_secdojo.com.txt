@@ -1,0 +1,2 @@
+enterprise.secdojo.com
+redmine.secdojo.com

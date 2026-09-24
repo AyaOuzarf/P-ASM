@@ -1,0 +1,272 @@
+[
+  {
+    "subdomain": "bo-cyberwar.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "www.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "jet.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "cyberwar.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "bo-cyberlab.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "pp.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "cyberlab.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "grafana.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "bo-support.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "staging.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "elearning.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "bo-cyberlearn.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "51-44-10-130.ip.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "login.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "ecowas-hackathon.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "vpn.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "labs.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "wildcard.ip.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "cyberlearn.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "bo-login.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "stgbackend.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "sentry.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "africa-ctf.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "account.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "cyber-awareness.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "ip.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "ns1.ip.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "prometheus.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "cyberchef.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "rra.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "locust.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "postiz.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "support.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "stgfrontend.sec-dojo.com",
+    "domain": "sec-dojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "redmine.secdojo.com",
+    "domain": "secdojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "registry.secdojo.com",
+    "domain": "secdojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "gitlab.secdojo.com",
+    "domain": "secdojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "enterprise.secdojo.com",
+    "domain": "secdojo.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "gitlab.sekera-group.com",
+    "domain": "sekera-group.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "www.sekera-group.com",
+    "domain": "sekera-group.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "registry.sekera-group.com",
+    "domain": "sekera-group.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "odoo.sekera-group.com",
+    "domain": "sekera-group.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "local-ma-01.vinci-logic.com",
+    "domain": "vinci-logic.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "eu-fr-01.vinci-logic.com",
+    "domain": "vinci-logic.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  },
+  {
+    "subdomain": "www.vincilogic.com",
+    "domain": "vincilogic.com",
+    "source": "subfinder",
+    "discovered_at": "2026-07-30T20:14:16.469983+00:00"
+  }
+]

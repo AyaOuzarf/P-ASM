@@ -1,0 +1,2 @@
+local-ma-01.vinci-logic.com
+eu-fr-01.vinci-logic.com
