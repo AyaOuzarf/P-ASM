@@ -16,6 +16,7 @@ OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shodan_n
 
 
 def normalize_host(raw: dict) -> dict:
+    """Convert one Shodan host record to the project schema."""
     services = []
     for item in raw.get("data", []):
         services.append({
@@ -50,6 +51,7 @@ def normalize_host(raw: dict) -> dict:
 
 
 def parse_file(filepath: str) -> tuple[str, list[dict]]:
+    """Read a collector file and return its domain and normalized hosts."""
     with open(filepath, encoding="utf-8") as f:
         record = json.load(f)
 
@@ -62,6 +64,7 @@ def parse_file(filepath: str) -> tuple[str, list[dict]]:
 
 
 def normalize():
+    """Normalize all saved Shodan collector files."""
     now = datetime.now(timezone.utc).isoformat()
     normalized = {}
 
@@ -87,4 +90,3 @@ def normalize():
 
 if __name__ == "__main__":
     normalize()
-    

@@ -28,6 +28,7 @@ FILE_PREFIX = "subfinder_"
 
 
 def belongs_to_domain(name, domain):
+    """Return whether a hostname belongs to the configured root domain."""
     return name == domain or name.endswith(f".{domain}")
 
 
@@ -47,6 +48,7 @@ def read_file_content(filepath):
 
 
 def read_hostnames(filepath, domain):
+    """Extract unique in-scope hostnames from a Subfinder text file."""
     """Format Subfinder : un nom d'hote par ligne."""
     content = read_file_content(filepath)
     if content is None:
@@ -61,6 +63,7 @@ def read_hostnames(filepath, domain):
 
 
 def normalize():
+    """Normalize all Subfinder files into shared JSON records."""
     now = datetime.now(timezone.utc).isoformat()
     normalized = []
 

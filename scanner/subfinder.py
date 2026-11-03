@@ -20,6 +20,7 @@ DOMAINS = [
 
 
 def run():
+    """Run Subfinder for every configured domain and save raw hostnames."""
     for domain in DOMAINS:
         out_file = os.path.join(SCANS_DIR, f"subfinder_{domain}.txt")
         print(f"[*] Subfinder -> {domain}")

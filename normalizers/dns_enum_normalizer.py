@@ -43,10 +43,12 @@ SOURCES = [
 
 
 def belongs_to_domain(name, domain):
+    """Return whether a discovered DNS name belongs to the root domain."""
     return name == domain or name.endswith(f".{domain}")
 
 
 def read_file_content(filepath):
+    """Read DNS enumeration output with common encoding fallbacks."""
     """Tolerant a l'encodage : la plupart des fichiers sont en UTF-8 (ecrits
     par amass.py/subfinder.py), mais un fichier genere ou re-sauvegarde
     manuellement sous Windows (ex: redirection PowerShell '>') peut se
@@ -63,6 +65,7 @@ def read_file_content(filepath):
 
 
 def read_hostnames_plain(filepath, domain):
+    """Extract hostnames from a plain discovery list."""
     """Format Subfinder : un nom d'hote par ligne."""
     content = read_file_content(filepath)
     if content is None:
@@ -77,6 +80,7 @@ def read_hostnames_plain(filepath, domain):
 
 
 def read_hostnames_amass_graph(filepath, domain):
+    """Extract FQDN tokens from Amass relationship output."""
     """Format Amass (sortie par defaut, texte de relations) : on extrait
     uniquement les tokens marques "(FQDN)" qui appartiennent au domaine
     cible, en ignorant les IP/ASN/netblocks et les FQDN externes references
@@ -105,6 +109,7 @@ READERS = {
 
 
 def normalize():
+    """Build the cross-source DNS discovery comparison report."""
     by_domain = {}
     by_subdomain = {}
 

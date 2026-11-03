@@ -40,6 +40,7 @@ OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certs_no
 
 
 def parse_date(value):
+    """Parse a certificate date and return a timezone-aware UTC datetime."""
     if not value:
         return None
     try:
@@ -55,6 +56,7 @@ def parse_date(value):
 
 
 def normalize():
+    """Aggregate raw certificate results by domain and hostname."""
     now = datetime.now(timezone.utc)
     by_domain = {}
     by_subdomain = {}

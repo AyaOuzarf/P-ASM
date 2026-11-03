@@ -30,6 +30,7 @@ OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "censys_n
 
 
 def normalize():
+    """Normalize manually collected Censys host records."""
     if not os.path.exists(RAW_FILE):
         print(f"[!] Fichier introuvable : {RAW_FILE}")
         print("    Cree-le manuellement avec les resultats vus dans l'interface Censys "

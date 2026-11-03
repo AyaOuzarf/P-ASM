@@ -1,4 +1,6 @@
 """
+E-ASM Amass normalizer: extracts in-scope hostnames from passive output.
+
 amass_normalizer.py
 
 Lit les sorties brutes de scanner/amass.py (scans/amass_*.txt) et
@@ -43,10 +45,12 @@ HOSTNAME_RE = re.compile(
 
 
 def belongs_to_domain(name, domain):
+    """Return whether a hostname belongs to the configured root domain."""
     return name == domain or name.endswith(f".{domain}")
 
 
 def read_file_content(filepath):
+    """Read Amass output using tolerant common encodings."""
     """Tolerant a l'encodage : la plupart des fichiers sont en UTF-8 (ecrits
     par amass.py), mais un fichier genere/re-sauvegarde manuellement sous
     Windows (ex: redirection PowerShell '>') peut se retrouver en UTF-16 avec
@@ -62,6 +66,7 @@ def read_file_content(filepath):
 
 
 def read_hostnames(filepath, domain):
+    """Extract unique in-scope hostnames from one Amass output file."""
     """Extrait les FQDN internes au domaine depuis le texte de relations Amass."""
     content = read_file_content(filepath)
     if content is None:
@@ -81,6 +86,7 @@ def read_hostnames(filepath, domain):
 
 
 def normalize():
+    """Normalize all Amass files and write common discovery records."""
     now = datetime.now(timezone.utc).isoformat()
     normalized = []
 

@@ -1,3 +1,5 @@
+"""E-ASM Assetfinder normalizer: converts raw hostnames into common records."""
+
 import os
 import re
 import json
@@ -11,11 +13,13 @@ SUBDOMAIN_RE = re.compile(r"^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-
 
 
 def is_valid_subdomain(line):
+    """Return whether a raw line contains a valid hostname."""
     line = line.strip().lower()
     return bool(line) and bool(SUBDOMAIN_RE.match(line))
 
 
 def extract_domain_from_filename(filename):
+    """Extract the root domain encoded in an Assetfinder filename."""
     # assetfinder_sekera-group.com.txt -> sekera-group.com
     name = os.path.basename(filename)
     name = name.replace("assetfinder_", "").replace(".txt", "")
@@ -23,6 +27,7 @@ def extract_domain_from_filename(filename):
 
 
 def normalize_file(filepath):
+    """Normalize one Assetfinder output file."""
     domain = extract_domain_from_filename(filepath)
     records = []
     with open(filepath, "r", errors="ignore") as f:
@@ -39,6 +44,7 @@ def normalize_file(filepath):
 
 
 def main():
+    """Normalize all Assetfinder files and write the shared JSON output."""
     all_records = []
     files = glob.glob(os.path.join(SCANS_DIR, "assetfinder_*.txt"))
 

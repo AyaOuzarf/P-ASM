@@ -53,6 +53,7 @@ app = Flask(__name__)
 # Chargement + fusion des sources JSON
 # ---------------------------------------------------------------------------
 def load_source(filename):
+    """Load one normalized JSON source file."""
     filepath = os.path.join(NORMALIZERS_DIR, filename)
     if not os.path.exists(filepath):
         return []
@@ -61,6 +62,7 @@ def load_source(filename):
 
 
 def load_all_records():
+    """Load discovery records from all dashboard-connected sources."""
     all_records = []
     for source, filename in SOURCE_FILES.items():
         all_records.extend(load_source(filename))
@@ -68,6 +70,7 @@ def load_all_records():
 
 
 def load_certs_data():
+    """Load normalized certificate summaries when available."""
     filepath = os.path.join(NORMALIZERS_DIR, CERTS_FILE)
     if not os.path.exists(filepath):
         return {"by_domain": {}, "by_subdomain": {}}
@@ -76,6 +79,7 @@ def load_certs_data():
 
 
 def load_takeover_data():
+    """Load takeover findings indexed by subdomain."""
     filepath = os.path.join(NORMALIZERS_DIR, TAKEOVER_FILE)
     if not os.path.exists(filepath):
         return {}
@@ -96,6 +100,7 @@ def load_cve_data():
 
 
 def merge_by_subdomain(records, certs_by_subdomain):
+    """Merge discovery and certificate records by hostname."""
     merged = {}
     for r in records:
         sub = r["subdomain"]
@@ -143,6 +148,7 @@ def load_ports_by_host():
 # Liveness check HTTP
 # ---------------------------------------------------------------------------
 def check_alive(subdomain, timeout=LIVENESS_TIMEOUT):
+    """Perform an optional HTTP HEAD liveness check for one hostname."""
     for scheme in ("https", "http"):
         url = f"{scheme}://{subdomain}"
         try:
@@ -157,6 +163,7 @@ def check_alive(subdomain, timeout=LIVENESS_TIMEOUT):
 
 
 def check_all_alive(subdomains):
+    """Run liveness checks concurrently for a collection of hostnames."""
     results = {}
     with ThreadPoolExecutor(max_workers=LIVENESS_MAX_WORKERS) as executor:
         futures = {executor.submit(check_alive, sub): sub for sub in subdomains}
@@ -186,6 +193,7 @@ CATEGORY_RULES = [
 
 
 def categorize(subdomain):
+    """Assign a business-oriented category from hostname naming patterns."""
     for pattern, category in CATEGORY_RULES:
         if re.search(pattern, subdomain):
             return category
@@ -211,6 +219,7 @@ DEFAULT_EXPO, DEFAULT_SENS, DEFAULT_JUSTIF = 1, 1, "Standard subdomain; no sensi
 
 
 def score_asset(subdomain):
+    """Return the initial exposure, sensitivity and explanation for an asset."""
     for pattern, expo, sens, justif in RISK_RULES:
         if re.search(pattern, subdomain):
             return expo, sens, justif
@@ -218,6 +227,7 @@ def score_asset(subdomain):
 
 
 def risk_label(score):
+    """Convert a numeric score into a dashboard risk label."""
     if score >= 9:
         return "Critical"
     if score >= 6:
@@ -228,6 +238,7 @@ def risk_label(score):
 
 
 def risk_color(score):
+    """Convert a numeric score into a Bootstrap dashboard color."""
     if score >= 9:
         return "danger"
     if score >= 6:
@@ -386,6 +397,7 @@ def build_assets(with_liveness=None):
 
 
 def build_stats(assets):
+    """Calculate dashboard statistics for the supplied asset list."""
     total = len(assets)
     alive = sum(1 for a in assets if a["alive"] is True)
     critical = sum(1 for a in assets if a["risk_label"] == "Critical")
@@ -437,6 +449,7 @@ def build_stats(assets):
 # ---------------------------------------------------------------------------
 @app.route("/")
 def index():
+    """Render the filtered asset inventory dashboard."""
     assets = build_assets()
     filters = {
         "search": request.args.get("search", "").strip().lower(),
@@ -473,6 +486,7 @@ def index():
 
 @app.route("/brand/sekera.png")
 def sekera_logo():
+    """Serve the Sekera Group brand image."""
     logo_path = os.path.join(BASE_DIR, "templates", "sekera.png")
     if not os.path.isfile(logo_path):
         abort(404)
@@ -481,6 +495,7 @@ def sekera_logo():
 
 @app.route("/methodology")
 def methodology():
+    """Render the methodology and public-source catalog page."""
     source_catalog = [
         {
             "name": "Subfinder",
@@ -548,6 +563,7 @@ def methodology():
 
 @app.route("/asset/<int:asset_id>")
 def asset_detail(asset_id):
+    """Render detailed evidence and scoring for one asset."""
     assets = build_assets()
     asset = next((a for a in assets if a["id"] == asset_id), None)
     if asset is None:
@@ -557,6 +573,7 @@ def asset_detail(asset_id):
 
 @app.route("/export.json")
 def export_json():
+    """Export the current asset inventory and statistics as JSON."""
     assets = build_assets()
     stats = build_stats(assets)
     payload = {

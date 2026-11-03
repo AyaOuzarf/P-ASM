@@ -47,6 +47,7 @@ OUTPUT_FILE = os.path.join(BASE_DIR, "merged_normalized.json")
 
 
 def load_json(filepath):
+    """Load one JSON input file or return an empty structure if absent."""
     if not os.path.exists(filepath):
         print(f"    [!] Fichier introuvable, ignore : {filepath}")
         return {"by_domain": {}, "by_subdomain": {}}
@@ -55,6 +56,7 @@ def load_json(filepath):
 
 
 def merge():
+    """Merge discovery and certificate records into one auxiliary report."""
     certs = load_json(CERTS_FILE)
     subfinder = load_json(SUBFINDER_FILE)
     amass = load_json(AMASS_FILE)

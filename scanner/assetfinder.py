@@ -1,3 +1,5 @@
+"""E-ASM Assetfinder collector: saves passive hostname discovery results."""
+
 import subprocess
 import os
 
@@ -5,6 +7,7 @@ SCANS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 
 
 def run_assetfinder(domain):
+    """Run Assetfinder for one authorized domain and save its raw output."""
     output_file = os.path.join(SCANS_DIR, f"assetfinder_{domain}.txt")
 
     with open(output_file, "w") as f:

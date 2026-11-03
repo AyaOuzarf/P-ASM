@@ -34,6 +34,7 @@ from app import build_assets  # noqa: E402
 
 
 def take_snapshot():
+    """Save a timestamped passive asset snapshot for future comparison."""
     os.makedirs(HISTORY_DIR, exist_ok=True)
 
     # with_liveness=False : le drift porte sur la decouverte et les

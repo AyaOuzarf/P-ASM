@@ -147,6 +147,7 @@ CURL_BIN = (
 # ============================================================
 
 def load_all_subdomains():
+    """Load the current E-ASM asset list without performing active probing."""
     """
     Récupère les sous-domaines depuis le pipeline EASM existant.
     """
@@ -175,6 +176,7 @@ def load_all_subdomains():
 # ============================================================
 
 def resolve_ip(hostname):
+    """Resolve one hostname to IPv4 for optional reputation lookup."""
     """
     Retourne l'IPv4 résolue du hostname.
     """
@@ -207,6 +209,7 @@ def resolve_ip(hostname):
 # ============================================================
 
 def query_urlhaus(host):
+    """Query URLhaus for passive malicious-URL intelligence about a host."""
     """
     Interroge URLhaus.
     """
@@ -304,6 +307,7 @@ def query_urlhaus(host):
 # ============================================================
 
 def query_otx(domain):
+    """Query AlienVault OTX with a network-failure circuit breaker."""
     """
     Interroge AlienVault OTX pour un domaine.
 
@@ -641,6 +645,7 @@ def query_otx(domain):
     }
 
 def query_abuseipdb(ip):
+    """Query AbuseIPDB and return only findings above the configured threshold."""
     """
     Interroge AbuseIPDB pour une IP.
 
@@ -776,6 +781,7 @@ def query_abuseipdb(ip):
 # ============================================================
 
 def scan():
+    """Run configured passive threat-intelligence checks and save findings."""
     global _otx_consecutive_failures, _otx_disabled
     _otx_consecutive_failures = 0
     _otx_disabled = False

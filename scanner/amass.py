@@ -7,6 +7,8 @@ sources tierces sont interrogees (resolveurs DNS publics, bases de certificats).
 
 Necessite Amass installe (go install github.com/owasp-amass/amass/v4/...@master)
 """
+"""E-ASM Amass collector: runs passive domain enumeration."""
+
 import subprocess
 import os
 
@@ -25,6 +27,7 @@ TIMEOUT_SECONDS = 300  # Amass -passive peut etre lent selon le domaine
 
 
 def run():
+    """Run passive Amass enumeration for every configured domain."""
     for domain in DOMAINS:
         out_file = os.path.join(SCANS_DIR, f"amass_{domain}.txt")
         print(f"[*] Amass (-passive) -> {domain}")

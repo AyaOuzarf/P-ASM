@@ -47,6 +47,7 @@ REQUEST_PAUSE = 2  # secondes entre deux recherches, pour rester sous les limite
 
 
 def load_api_key() -> str:
+    """Load the Shodan API key from the environment or standard user paths."""
     key = os.environ.get("SHODAN_API_KEY")
     if key:
         return key.strip()
@@ -98,6 +99,7 @@ def search_by_certificate(api: "shodan_scanner.Shodan", domain: str) -> dict:
 
 
 def run():
+    """Run optional passive Shodan certificate searches for all domains."""
     api = shodan_scanner.Shodan(load_api_key())
 
     for domain in DOMAINS:

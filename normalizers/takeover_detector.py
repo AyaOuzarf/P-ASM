@@ -56,6 +56,7 @@ CNAME_RE = re.compile(
 
 
 def belongs_to_domain(name, domain):
+    """Return whether a CNAME source belongs to the authorized domain."""
     return name == domain or name.endswith(f".{domain}")
 
 
@@ -97,6 +98,7 @@ VULNERABLE_SERVICES = {
 
 
 def read_file_content(filepath):
+    """Read Amass graph output with tolerant encoding handling."""
     """Tolerant a l'encodage, meme raison que les autres normalizers du
     projet : certains fichiers Amass peuvent avoir ete resauvegardes en
     UTF-16 (redirection PowerShell) plutot qu'en UTF-8."""
@@ -111,6 +113,7 @@ def read_file_content(filepath):
 
 
 def extract_cname_pairs(filepath, domain):
+    """Extract in-scope CNAME source/target pairs from Amass output."""
     """Retourne [(sous_domaine, cible_cname), ...] pour toutes les relations
     CNAME dont la source appartient au domaine cible."""
     content = read_file_content(filepath)
@@ -127,6 +130,7 @@ def extract_cname_pairs(filepath, domain):
 
 
 def match_known_service(target):
+    """Identify a known third-party service pattern in a CNAME target."""
     """Retourne le nom lisible du service si la cible correspond a un
     fournisseur connu pour ce risque, sinon None."""
     for suffix, service_name in VULNERABLE_SERVICES.items():
@@ -136,6 +140,7 @@ def match_known_service(target):
 
 
 def target_resolves(target):
+    """Check whether a takeover target currently resolves in DNS."""
     """True si le nom cible resout encore en DNS, False si NXDOMAIN/erreur
     de resolution (signal de ressource abandonnee), None si on n'a pas pu
     trancher (timeout reseau, pas de connectivite)."""
@@ -153,6 +158,7 @@ def target_resolves(target):
 
 
 def analyze():
+    """Analyze Amass CNAME relationships and save potential takeover signals."""
     findings = []
 
     pattern = os.path.join(SCANS_DIR, f"{FILE_PREFIX}*.txt")

@@ -36,6 +36,7 @@ VALID_HOSTNAME_RE = re.compile(r"^[a-z0-9]([a-z0-9\-]{0,62}[a-z0-9])?(\.[a-z0-9]
 
 
 def is_valid_hostname(name: str) -> bool:
+    """Return whether a certificate name is a valid DNS hostname."""
     return bool(VALID_HOSTNAME_RE.match(name)) and len(name) <= 253
 
 REQUEST_PAUSE = 2       # secondes entre deux requetes, pour rester correct envers crt.sh
@@ -44,6 +45,7 @@ RETRIES = 4
 
 
 def query_crtsh(domain: str) -> list:
+    """Fetch Certificate Transparency records from crt.sh with retries."""
     url = f"https://crt.sh/?q=%25.{domain}&output=json"
     last_error = None
 
@@ -157,6 +159,7 @@ def summarize(domain: str, raw_entries: list) -> dict:
 
 
 def run():
+    """Collect and save certificate names for every configured domain."""
     for domain in DOMAINS:
         out_file = os.path.join(SCANS_DIR, f"certs_{domain}.json")
         print(f"[*] crt.sh + Cert Spotter -> {domain}")
