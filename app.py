@@ -39,7 +39,7 @@ ALL_DISCOVERY_SOURCES = set(SOURCE_FILES) | {"certs"}
 # The project is intentionally passive-first for enterprise use.
 # Active HTTP probing is optional and disabled by default because the project is
 # meant to provide evidence-based risk scoring from public, non-intrusive signals.
-PASSIVE_ONLY_MODE = os.environ.get("PASM_PASSIVE_ONLY", "true").lower() == "true"
+PASSIVE_ONLY_MODE = os.environ.get("EASM_PASSIVE_ONLY", "true").lower() == "true"
 ENABLE_AI_SUMMARY = os.environ.get("ENABLE_AI_SUMMARY", "false").lower() == "true"
 ENABLE_LIVE_VULN_LOOKUPS = os.environ.get("ENABLE_LIVE_VULN_LOOKUPS", "false").lower() == "true"
 

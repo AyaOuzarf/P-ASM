@@ -1,19 +1,19 @@
 # EXTERNAL ATTACK SURFACE MANAGEMENT
 
-## P-ASM — Passive Security Intelligence Platform
+## E-ASM — Passive Security Intelligence Platform
 
 **Project:** PFA — External Attack Surface Management  
 **Organization:** Sekera Group  
 **Author:** Aya Ouzarf — Pentester Engineer  
-**Repository:** [AyaOuzarf/P-ASM](https://github.com/AyaOuzarf/P-ASM)
+**Repository:** AyaOuzarf/E-ASM
 
-> P-ASM discovers, correlates and prioritizes publicly visible assets using a passive, explainable and evidence-based workflow.
+> E-ASM discovers, correlates and prioritizes publicly visible assets using a passive, explainable and evidence-based workflow.
 
 ## Problematic and solution
 
 Organizations often do not have one reliable inventory of their public domains, subdomains, certificates and exposed services. Different tools return different results, forgotten environments may remain visible, and security teams may struggle to decide what to review first.
 
-P-ASM solves this visibility problem by combining passive discovery, Certificate Transparency, optional public vulnerability intelligence, source correlation and a Flask dashboard. It is designed for authorized domains only. It is not an exploit framework, an intrusive scanner or proof that an asset is vulnerable.
+E-ASM solves this visibility problem by combining passive discovery, Certificate Transparency, optional public vulnerability intelligence, source correlation and a Flask dashboard. It is designed for authorized domains only. It is not an exploit framework, an intrusive scanner or proof that an asset is vulnerable.
 
 ## Project objectives
 

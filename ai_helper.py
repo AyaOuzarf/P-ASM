@@ -63,7 +63,7 @@ class FreeAIHelper:
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
             "HTTP-Referer": "https://localhost",
-            "X-Title": "P-ASM Passive Risk Assistant",
+            "X-Title": "E-ASM Passive Risk Assistant",
         }
 
         req = Request(

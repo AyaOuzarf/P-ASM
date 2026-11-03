@@ -1,9 +1,9 @@
-GUIDE D'ENTRETIEN - PROJET P-ASM
+GUIDE D'ENTRETIEN - PROJET E-ASM
 ================================
 
 Objectif de ce document
 -----------------------
-Ce guide sert a preparer une presentation orale du projet P-ASM et a repondre
+Ce guide sert a preparer une presentation orale du projet E-ASM et a repondre
 aux questions techniques courantes. Il decrit le code du projet tel qu'il est
 actuellement. Il distingue les fonctions implementees, les integrations
 optionnelles et les limites connues. Ne presente pas une fonction optionnelle
@@ -478,7 +478,7 @@ Internet.
 CVE : identifiant public d'une vulnerabilite connue.
 
 CVSS : score de severite associe a une vulnerabilite; ce n'est pas le score de
-risque specifique de P-ASM.
+risque specifique de E-ASM.
 
 KEV : catalogue CISA de vulnerabilites connues comme exploitees.
 
