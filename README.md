@@ -1,8 +1,38 @@
-# P-ASM: Passive Attack-Surface Management
+# EXTERNAL ATTACK SURFACE MANAGEMENT
 
-P-ASM is a small security inventory project. It collects public information about an organization's internet-facing hostnames, combines results from several sources, adds available security evidence, and presents the result in a web dashboard.
+## P-ASM — Passive Security Intelligence Platform
 
-Use it only for domains you own or have permission to assess. Its purpose is **visibility and prioritization**: show what public assets are known, where each was found, what evidence is available, and what may deserve review first. It is not an exploit framework, and a score or public-source match is not proof that a system is vulnerable.
+**Project:** PFA — External Attack Surface Management  
+**Organization:** Sekera Group  
+**Author:** Aya Ouzarf — Pentester Engineer  
+**Repository:** [AyaOuzarf/P-ASM](https://github.com/AyaOuzarf/P-ASM)
+
+> P-ASM discovers, correlates and prioritizes publicly visible assets using a passive, explainable and evidence-based workflow.
+
+## Problematic and solution
+
+Organizations often do not have one reliable inventory of their public domains, subdomains, certificates and exposed services. Different tools return different results, forgotten environments may remain visible, and security teams may struggle to decide what to review first.
+
+P-ASM solves this visibility problem by combining passive discovery, Certificate Transparency, optional public vulnerability intelligence, source correlation and a Flask dashboard. It is designed for authorized domains only. It is not an exploit framework, an intrusive scanner or proof that an asset is vulnerable.
+
+## Project objectives
+
+- discover public assets with several independent sources;
+- preserve the source that found each hostname;
+- identify certificate-only and single-source assets;
+- detect potential CNAME/subdomain takeover signals;
+- enrich assets with CVE, CVSS, KEV and EPSS context when available;
+- produce an explainable score and remediation priority;
+- keep raw results and verification runs reproducible;
+- provide Sekera Group with a clear external attack-surface view.
+
+## Current recorded results
+
+The local verification recorded 52 assets: `sec-dojo.com` (35), `secdojo.com` (6), `sekera-group.com` (6), `vinci-logic.com` (3) and `vincilogic.com` (2). The test suite passed with 13 tests. Shodan currently has zero matches, no real takeover is stored, no CVE result is stored and no port inventory is connected.
+
+See the [verification report](verification/runs/20261103T220913Z/verification_report.md) and [JSON evidence](verification/runs/20261103T220913Z/verification_report.json).
+
+Use it only for domains you own or have permission to assess. Its purpose is **visibility and prioritization**: show what public assets are known, where each was found, what evidence is available, and what may deserve review first.
 
 ## The Project in Simple Steps
 
