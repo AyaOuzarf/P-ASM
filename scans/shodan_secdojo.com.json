@@ -1,0 +1,6 @@
+{
+  "domain": "secdojo.com",
+  "query": "ssl.cert.subject.cn:\"secdojo.com\"",
+  "total": 0,
+  "matches": []
+}

@@ -2,3 +2,8 @@ enterprise.secdojo.com
 gitlab.secdojo.com
 redmine.secdojo.com
 registry.secdojo.com
+gitlab.secdojo.com
+redmine.secdojo.com
+registry.secdojo.com
+www.secdojo.com
+enterprise.secdojo.com

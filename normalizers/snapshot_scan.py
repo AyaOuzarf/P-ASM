@@ -15,16 +15,9 @@ chaque cycle de scan complet (comme les autres normalizers), par exemple :
     python normalizers\\takeover_detector.py
     python normalizers\\snapshot_scan.py      <-- a la fin, une fois tout normalise
 
-Ces snapshots permettent ensuite au dashboard (route /drift dans app.py) de
-comparer deux scans dans le temps et de detecter automatiquement :
-- les nouveaux sous-domaines apparus
-- les sous-domaines qui ne sont plus decouverts (disparus)
-- les certificats nouvellement expires ou nouvellement renouveles
-- les nouveaux risques de subdomain takeover
-
-C'est le coeur de la "surveillance continue" propre a l'EASM : un scan
-isole donne une photo, plusieurs scans compares dans le temps donnent une
-vraie detection de changement de surface d'attaque.
+Ces snapshots horodates conservent des photos successives de la surface
+connue. Le dashboard ne possede pas actuellement de route /drift; les
+changements entre deux fichiers doivent donc etre compares separement.
 """
 import json
 import os

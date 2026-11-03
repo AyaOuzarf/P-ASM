@@ -14,7 +14,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
-from flask import Flask, render_template, abort, Response, request
+from flask import Flask, render_template, abort, Response, request, send_from_directory
 from datetime import datetime, timezone
 
 from risk_engine import compute_verifiable_risk, calculate_enterprise_risk
@@ -41,6 +41,7 @@ ALL_DISCOVERY_SOURCES = set(SOURCE_FILES) | {"certs"}
 # meant to provide evidence-based risk scoring from public, non-intrusive signals.
 PASSIVE_ONLY_MODE = os.environ.get("PASM_PASSIVE_ONLY", "true").lower() == "true"
 ENABLE_AI_SUMMARY = os.environ.get("ENABLE_AI_SUMMARY", "false").lower() == "true"
+ENABLE_LIVE_VULN_LOOKUPS = os.environ.get("ENABLE_LIVE_VULN_LOOKUPS", "false").lower() == "true"
 
 LIVENESS_TIMEOUT = 3
 LIVENESS_MAX_WORKERS = 20
@@ -173,14 +174,14 @@ def check_all_alive(subdomains):
 # Categorisation (par mot-cle dans le nom)
 # ---------------------------------------------------------------------------
 CATEGORY_RULES = [
-    (r"^(login|auth|account|sso|bo-login)\.", "Acces / authentification"),
-    (r"^bo-", "Back-office / administration"),
-    (r"^(vpn)\.", "Acces distant"),
+    (r"^(login|auth|account|sso|bo-login)\.", "Access / authentication"),
+    (r"^bo-", "Back office / administration"),
+    (r"^(vpn)\.", "Remote access"),
     (r"^(staging|stg|dev|test|preprod)", "Pre-production"),
-    (r"^(grafana|prometheus|sentry)\.", "Supervision / observabilite"),
+    (r"^(grafana|prometheus|sentry)\.", "Monitoring / observability"),
     (r"^(gitlab|registry)\.", "Infrastructure / DevOps"),
-    (r"^(odoo)\.", "ERP / gestion"),
-    (r"^(ns1?|ip|wildcard)\.", "Infrastructure DNS / IP"),
+    (r"^(odoo)\.", "ERP / business management"),
+    (r"^(ns1?|ip|wildcard)\.", "DNS / IP infrastructure"),
 ]
 
 
@@ -188,25 +189,25 @@ def categorize(subdomain):
     for pattern, category in CATEGORY_RULES:
         if re.search(pattern, subdomain):
             return category
-    return "Autres"
+    return "Other"
 
 
 # ---------------------------------------------------------------------------
 # Scoring de risque (Exposition x Sensibilite, base sur le nom)
 # ---------------------------------------------------------------------------
 RISK_RULES = [
-    (r"^vpn\.",                          3, 3, "Point d'acces distant potentiel vers l'infrastructure interne"),
-    (r"^gitlab\.",                       3, 3, "Peut heberger du code source, des secrets ou des jetons d'acces"),
-    (r"^bo-",                            2, 3, "Interface d'administration / back-office"),
-    (r"^odoo\.",                         2, 3, "ERP - donnees d'entreprise"),
-    (r"^registry\.",                     2, 2, "Registre de paquets/images - risque si images internes exposees"),
-    (r"^(grafana|prometheus)\.",         2, 2, "Dashboard/metriques - risque si acces anonyme autorise"),
-    (r"^sentry\.",                       2, 2, "Traces d'erreurs pouvant contenir des informations internes"),
-    (r"^(staging|stg|dev|test|preprod)", 3, 1, "Environnement de pre-production expose publiquement"),
-    (r"^(login|auth|account|sso)\.",     3, 2, "Point d'authentification expose"),
+    (r"^vpn\.",                          3, 3, "Potential remote access point to internal infrastructure"),
+    (r"^gitlab\.",                       3, 3, "May host source code, secrets, or access tokens"),
+    (r"^bo-",                            2, 3, "Back-office or administration interface"),
+    (r"^odoo\.",                         2, 3, "ERP containing business data"),
+    (r"^registry\.",                     2, 2, "Package or image registry; risk if private images are exposed"),
+    (r"^(grafana|prometheus)\.",         2, 2, "Monitoring dashboard; risk if anonymous access is enabled"),
+    (r"^sentry\.",                       2, 2, "Error traces may contain internal information"),
+    (r"^(staging|stg|dev|test|preprod)", 3, 1, "Publicly exposed pre-production environment"),
+    (r"^(login|auth|account|sso)\.",     3, 2, "Exposed authentication endpoint"),
 ]
 
-DEFAULT_EXPO, DEFAULT_SENS, DEFAULT_JUSTIF = 1, 1, "Sous-domaine standard, pas de motif sensible detecte"
+DEFAULT_EXPO, DEFAULT_SENS, DEFAULT_JUSTIF = 1, 1, "Standard subdomain; no sensitive naming pattern detected"
 
 
 def score_asset(subdomain):
@@ -218,12 +219,12 @@ def score_asset(subdomain):
 
 def risk_label(score):
     if score >= 9:
-        return "Critique"
+        return "Critical"
     if score >= 6:
-        return "Eleve"
+        return "High"
     if score >= 3:
-        return "Moyen"
-    return "Faible"
+        return "Medium"
+    return "Low"
 
 
 def risk_color(score):
@@ -296,7 +297,11 @@ def build_assets(with_liveness=None):
         # Enrich with public/verified vulnerability records for the asset, when the
         # project can infer technology hints from the subdomain or service names.
         service_names = [p.get("service") for p in ports_by_host.get(subdomain, []) if p.get("service")]
-        verified_cves = collect_verified_findings(subdomain, service_names)
+        verified_cves = (
+            collect_verified_findings(subdomain, service_names)
+            if ENABLE_LIVE_VULN_LOOKUPS
+            else []
+        )
         score = risk["score"]
         justif = risk["reason"]
 
@@ -307,9 +312,9 @@ def build_assets(with_liveness=None):
                 if verified_score > score:
                     score = verified_score
                     justif = (
-                        f"{justif} | VULNÉRABILITÉ PUBLIQUE VÉRIFIÉE : "
+                        f"{justif} | VERIFIED PUBLIC VULNERABILITY: "
                         f"{verified_cves[0]['cve_id']} (CVSS {verified_cvss}) "
-                        f"depuis NVD / EPSS / KEV - {verified_cves[0].get('description', '')[:150]}"
+                        f"from NVD / EPSS / KEV - {verified_cves[0].get('description', '')[:150]}"
                     )
 
         # The enterprise risk formula is the final authoritative score. It combines
@@ -321,7 +326,7 @@ def build_assets(with_liveness=None):
             exposure=max(1, min(5, expo)),
             verified_cves=verified_cves,
             takeover_risk=takeover,
-            cert_active=bool(cert_info and cert_info.get("active", True)),
+            cert_active=cert_info.get("active") if cert_info else None,
         )
         score = min(10, max(1, enterprise_risk["score"]))
         justif = f"{enterprise_risk['justification']} | {justif}"
@@ -383,8 +388,8 @@ def build_assets(with_liveness=None):
 def build_stats(assets):
     total = len(assets)
     alive = sum(1 for a in assets if a["alive"] is True)
-    critical = sum(1 for a in assets if a["risk_label"] == "Critique")
-    high = sum(1 for a in assets if a["risk_label"] == "Eleve")
+    critical = sum(1 for a in assets if a["risk_label"] == "Critical")
+    high = sum(1 for a in assets if a["risk_label"] == "High")
     with_open_ports = sum(1 for a in assets if a["ports"])
     cert_only = sum(1 for a in assets if a["cert_only"])
     expired_certs = sum(1 for a in assets if a["certificate"] and not a["certificate"]["active"])
@@ -466,30 +471,38 @@ def index():
     return render_template("index.html", assets=filtered_assets, stats=stats, filters=filters, categories=categories, domains=domains, priorities=priorities)
 
 
+@app.route("/brand/sekera.png")
+def sekera_logo():
+    logo_path = os.path.join(BASE_DIR, "templates", "sekera.png")
+    if not os.path.isfile(logo_path):
+        abort(404)
+    return send_from_directory(os.path.join(BASE_DIR, "templates"), "sekera.png")
+
+
 @app.route("/methodology")
 def methodology():
     source_catalog = [
         {
             "name": "Subfinder",
-            "purpose": "Découverte passive de sous-domaines",
+            "purpose": "Passive subdomain discovery",
             "url": "https://github.com/projectdiscovery/subfinder",
             "type": "Discovery",
         },
         {
             "name": "Amass",
-            "purpose": "Découverte passive et analyse de surface",
+            "purpose": "Passive discovery and attack-surface analysis",
             "url": "https://github.com/OWASP/Amass",
             "type": "Discovery",
         },
         {
             "name": "Assetfinder",
-            "purpose": "Découverte rapide de sous-domaines",
+            "purpose": "Fast subdomain discovery",
             "url": "https://github.com/tomnomnom/assetfinder",
             "type": "Discovery",
         },
         {
             "name": "crt.sh",
-            "purpose": "Historique de certificats TLS / sous-domaines publics",
+            "purpose": "TLS certificate history and public subdomains",
             "url": "https://crt.sh/",
             "type": "Certificate",
         },
@@ -507,25 +520,25 @@ def methodology():
         },
         {
             "name": "CISA KEV",
-            "purpose": "Vulnérabilités connues exploitées",
+            "purpose": "Known exploited vulnerabilities",
             "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
             "type": "Vulnerability",
         },
         {
             "name": "EPSS",
-            "purpose": "Probabilité d'exploitation et priorisation",
+            "purpose": "Exploit likelihood and prioritization",
             "url": "https://www.first.org/epss/",
             "type": "Vulnerability",
         },
         {
             "name": "OSV",
-            "purpose": "Vulnérabilités de paquets open source",
+            "purpose": "Open-source package vulnerabilities",
             "url": "https://osv.dev/",
             "type": "Vulnerability",
         },
         {
             "name": "Takeover detector",
-            "purpose": "Détection passive de risque de subdomain takeover",
+            "purpose": "Passive subdomain takeover risk detection",
             "url": "https://github.com/EdOverflow/can-i-take-over-xyz",
             "type": "Detection",
         },

@@ -33,7 +33,7 @@ except ImportError:
     sys.exit(1)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SCANS_DIR = os.path.join(BASE_DIR, "scans")
+SCANS_DIR = os.path.join(os.path.dirname(BASE_DIR), "scans")
 
 DOMAINS = [
     "sekera-group.com",
@@ -98,7 +98,6 @@ def search_by_certificate(api: "shodan_scanner.Shodan", domain: str) -> dict:
 
 
 def run():
-    os.makedirs(SCANS_DIR, exist_ok=True)
     api = shodan_scanner.Shodan(load_api_key())
 
     for domain in DOMAINS:

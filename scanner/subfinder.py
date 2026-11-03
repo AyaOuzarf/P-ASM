@@ -1,6 +1,6 @@
 """
 subfinder.py - lance Subfinder sur les domaines du perimetre et sauvegarde
-une sortie brute .txt par domaine dans scanner/scans/.
+une sortie brute .txt par domaine dans le dossier scans/ a la racine du projet.
 
 Necessite Subfinder installe (go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest)
 """
@@ -8,7 +8,7 @@ import subprocess
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SCANS_DIR = os.path.join(BASE_DIR, "scans")
+SCANS_DIR = os.path.join(os.path.dirname(BASE_DIR), "scans")
 
 DOMAINS = [
     "sekera-group.com",
@@ -20,7 +20,6 @@ DOMAINS = [
 
 
 def run():
-    os.makedirs(SCANS_DIR, exist_ok=True)
     for domain in DOMAINS:
         out_file = os.path.join(SCANS_DIR, f"subfinder_{domain}.txt")
         print(f"[*] Subfinder -> {domain}")

@@ -1,0 +1,21 @@
+{
+  "domain": "vinci-logic.com",
+  "total_unique_subdomains": 2,
+  "rejected_malformed": [],
+  "subdomains": [
+    {
+      "subdomain": "local-ma-01.vinci-logic.com",
+      "domain": "vinci-logic.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE1",
+      "valid_from": "2026-09-25T00:32:50Z",
+      "valid_to": "2026-12-24T00:32:49Z"
+    },
+    {
+      "subdomain": "vinci-logic.com",
+      "domain": "vinci-logic.com",
+      "issuer": "C=US, O=Google Trust Services, CN=WE1",
+      "valid_from": "2026-10-08T06:46:49Z",
+      "valid_to": "2027-01-06T07:44:25Z"
+    }
+  ]
+}

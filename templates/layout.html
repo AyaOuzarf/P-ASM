@@ -1,69 +1,208 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Pentest Recon Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080c14">
+  <title>{% block title %}Sekera | Attack Surface{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem("sekera-theme") || "dark";
+    } catch (_) {
+      document.documentElement.dataset.theme = "dark";
+    }
+  </script>
   <style>
+    :root {
+      color-scheme: dark;
+      --page: #080c14;
+      --surface: #101827;
+      --surface-raised: #141f30;
+      --surface-soft: #0c1421;
+      --border: #26354a;
+      --text: #edf4ff;
+      --muted: #94a5bc;
+      --blue: #38a9ff;
+      --blue-strong: #087fe0;
+      --red: #ff4d61;
+      --red-soft: rgba(255, 77, 97, .12);
+      --shadow: 0 18px 50px rgba(0, 0, 0, .24);
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --page: #eef3fa;
+      --surface: #fff;
+      --surface-raised: #f5f8fc;
+      --surface-soft: #e8eff8;
+      --border: #d5dfec;
+      --text: #142033;
+      --muted: #5f7188;
+      --blue: #087fe0;
+      --blue-strong: #0568bd;
+      --red: #d92d43;
+      --red-soft: rgba(217, 45, 67, .09);
+      --shadow: 0 16px 40px rgba(30, 57, 91, .08);
+    }
+    * { box-sizing: border-box; }
     body {
-      background: linear-gradient(180deg, #f7f9fc 0%, #eef3f8 100%);
-      color: #1f2a37;
-      font-family: "Segoe UI", Tahoma, sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 12% -10%, rgba(8, 127, 224, .16), transparent 38rem),
+        radial-gradient(ellipse at 100% 12%, rgba(255, 77, 97, .08), transparent 28rem),
+        var(--page);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", system-ui, sans-serif;
+      transition: background-color .2s ease, color .2s ease;
     }
-    .navbar-brand { font-weight: 700; }
+    a { color: var(--blue); }
+    a:hover { color: var(--text); }
+    .topbar {
+      background: rgba(8, 12, 20, .88);
+      border-bottom: 1px solid rgba(73, 105, 143, .25);
+      backdrop-filter: blur(16px);
+    }
+    [data-theme="light"] .topbar { background: rgba(255, 255, 255, .9); }
+    .navbar-brand { display: flex; align-items: center; gap: .8rem; color: var(--text); font-weight: 750; letter-spacing: .01em; }
+    .brand-logo { width: 136px; height: 42px; object-fit: contain; border-radius: 9px; background: #fff; padding: 3px 7px; }
+    .brand-caption { display: block; color: var(--muted); font-size: .68rem; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; }
+    .nav-link-btn, .theme-toggle {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text);
+      background: var(--surface);
+      text-decoration: none;
+      padding: .48rem .75rem;
+      font-size: .86rem;
+      font-weight: 650;
+    }
+    .nav-link-btn:hover, .theme-toggle:hover { border-color: var(--blue); color: var(--blue); }
     .card {
-      border: 1px solid rgba(15, 23, 42, 0.06);
-      border-radius: 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      color: var(--text);
     }
-    .stat-card {
-      border-left: 5px solid transparent;
-      min-height: 120px;
+    .card > .card-header {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-raised);
+      color: var(--text);
     }
-    .stat-card.danger { border-left-color: #dc3545; }
-    .stat-card.success { border-left-color: #198754; }
-    .stat-card.warning { border-left-color: #ffc107; }
-    .stat-card.info { border-left-color: #0dcaf0; }
-    .stat-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      color: #6c757d;
-      margin-bottom: 8px;
+    .surface-card {
+      overflow: hidden;
+      background: linear-gradient(145deg, var(--surface), var(--surface-raised));
+      box-shadow: var(--shadow);
     }
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 800;
-      line-height: 1;
+    .surface-card .card-header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 15, 26, .25);
+      color: var(--text);
+      padding: 1rem 1.2rem;
     }
-    .priority-P1 { background-color: #dc3545; color: white; }
-    .priority-P2 { background-color: #fd7e14; color: white; }
-    .priority-P3 { background-color: #ffc107; color: #1f2a37; }
-    .priority-P4 { background-color: #198754; color: white; }
-    .table > :not(caption) > * > * {
-      padding-top: 0.9rem;
-      padding-bottom: 0.9rem;
+    [data-theme="light"] .surface-card .card-header { background: var(--surface-raised); }
+    .page-heading { font-size: clamp(1.7rem, 3vw, 2.45rem); font-weight: 800; letter-spacing: -.04em; }
+    .page-subtitle { max-width: 680px; color: var(--muted); }
+    .eyebrow { color: var(--blue); font-size: .72rem; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
+    .stat-card { min-height: 126px; border-left: 3px solid var(--blue); }
+    .stat-card.danger { border-left-color: var(--red); }
+    .stat-card.success { border-left-color: var(--blue); }
+    .stat-card.warning { border-left-color: #f0a33a; }
+    .stat-card.info { border-left-color: #7d8cff; }
+    .stat-label { color: var(--muted); font-size: .64rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; margin-bottom: .7rem; }
+    .stat-value { color: var(--text); font-size: 2rem; font-weight: 850; line-height: 1; }
+    .filter-card { border-top: 2px solid var(--blue); }
+    .form-label { color: var(--muted); font-size: .74rem; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; margin-bottom: .45rem; }
+    .form-control, .form-select {
+      min-height: 43px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background-color: var(--surface-soft);
+      color: var(--text);
     }
-    .form-label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #495057;
-      margin-bottom: 0.35rem;
+    .form-control::placeholder { color: var(--muted); opacity: .8; }
+    .form-control:focus, .form-select:focus { border-color: var(--blue); background-color: var(--surface-soft); color: var(--text); box-shadow: 0 0 0 .2rem rgba(56, 169, 255, .16); }
+    .form-select option { background: var(--surface); color: var(--text); }
+    .btn-accent { min-height: 43px; border: 0; border-radius: 9px; background: linear-gradient(135deg, var(--blue-strong), #075bb1); color: #fff; font-weight: 750; }
+    .btn-accent:hover { background: var(--red); color: #fff; }
+    .btn-reset { border-color: var(--border); color: var(--muted); }
+    .btn-reset:hover { border-color: var(--red); color: var(--red); }
+    .score-note { border-left: 3px solid var(--red); color: var(--muted); }
+    .table { --bs-table-color: var(--text); --bs-table-bg: transparent; --bs-table-border-color: var(--border); --bs-table-hover-color: var(--text); --bs-table-hover-bg: rgba(56, 169, 255, .06); margin: 0; }
+    .table thead th { padding: .9rem .8rem; background: var(--surface-soft); color: var(--muted); font-size: .69rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+    .table tbody td { padding: .9rem .8rem; vertical-align: middle; }
+    .table a { color: var(--text); }
+    .table a:hover { color: var(--blue); }
+    .text-muted { color: var(--muted) !important; }
+    .badge.bg-light { background: var(--surface-soft) !important; color: var(--text) !important; border-color: var(--border) !important; }
+    .badge.bg-info { background: rgba(56, 169, 255, .16) !important; color: var(--blue) !important; }
+    .badge.bg-dark { background: #05080d !important; color: #fff !important; }
+    .alert-light, .alert-info { border-color: var(--border); background: var(--surface-soft); color: var(--text); }
+    .progress { background: var(--surface-soft); }
+    .priority-P1 { background: var(--red); color: #fff; }
+    .priority-P2 { background: #ef7c35; color: #fff; }
+    .priority-P3 { background: #e8b647; color: #17130a; }
+    .priority-P4 { background: var(--blue-strong); color: #fff; }
+    .method-step { height: 100%; border: 1px solid var(--border); border-radius: 13px; background: var(--surface-soft); padding: 1rem; }
+    .step-number { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px; background: rgba(56, 169, 255, .14); color: var(--blue); font-weight: 850; }
+    .source-chip { border: 1px solid var(--border); border-radius: 99px; background: var(--surface-soft); color: var(--text); padding: .35rem .65rem; font-size: .8rem; }
+    .notice { border: 1px solid rgba(255, 77, 97, .35); border-left: 3px solid var(--red); border-radius: 10px; background: var(--red-soft); color: var(--text); padding: 1rem; }
+    .site-footer { border-top: 1px solid var(--border); color: var(--muted); font-size: .82rem; }
+    @media (max-width: 767.98px) {
+      .nav-actions { width: 100%; justify-content: flex-start; flex-wrap: wrap; padding-bottom: .8rem; }
+      .navbar-brand { margin-right: 0; }
+      .stat-card { min-height: 104px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-dark bg-dark mb-4">
-    <div class="container">
-      <a class="navbar-brand" href="/">🎯 Pentest Recon Dashboard</a>
-      <div class="d-flex gap-2">
-        <a class="btn btn-outline-light btn-sm" href="/">Dashboard</a>
-        <a class="btn btn-outline-light btn-sm" href="/methodology">Méthodologie</a>
-        <a class="btn btn-outline-light btn-sm" href="/export.json">Export JSON</a>
+  <nav class="navbar topbar sticky-top mb-4">
+    <div class="container-xl flex-wrap">
+      <a class="navbar-brand py-2" href="/">
+        <img class="brand-logo" src="{{ url_for('sekera_logo') }}" alt="Sekera logo">
+        <span class="brand-caption">Attack surface<br>management</span>
+      </a>
+      <div class="nav-actions d-flex align-items-center gap-2">
+        <a class="nav-link-btn" href="/">Dashboard</a>
+        <a class="nav-link-btn" href="/methodology">Methodology</a>
+        <a class="nav-link-btn" href="/export.json">Export JSON</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="true" aria-label="Switch to light mode">☀️ Light mode</button>
       </div>
     </div>
   </nav>
-  <div class="container pb-5">
+  <main class="container-xl pb-5">
     {% block content %}{% endblock %}
-  </div>
+  </main>
+  <footer class="site-footer mt-auto py-4">
+    <div class="container-xl d-flex flex-column flex-sm-row justify-content-between gap-2">
+      <span>© <span id="copyright-year">2026</span> Sekera Group. All rights reserved.</span>
+      <span>Designed and developed by <strong class="text-reset">Aya Ouzarf</strong> · Pentester Engineer</span>
+    </div>
+  </footer>
+  <script>
+    const themeButton = document.getElementById("theme-toggle");
+    const themeRoot = document.documentElement;
+
+    function updateThemeButton() {
+      const dark = themeRoot.dataset.theme === "dark";
+      themeButton.setAttribute("aria-pressed", String(dark));
+      themeButton.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+      themeButton.textContent = dark ? "☀️ Light mode" : "🌙 Dark mode";
+    }
+
+    updateThemeButton();
+    themeButton.addEventListener("click", () => {
+      themeRoot.dataset.theme = themeRoot.dataset.theme === "dark" ? "light" : "dark";
+      try {
+        localStorage.setItem("sekera-theme", themeRoot.dataset.theme);
+      } catch (_) {
+        // The selected theme remains active for this page if storage is unavailable.
+      }
+      updateThemeButton();
+    });
+    document.getElementById("copyright-year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

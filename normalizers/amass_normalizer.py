@@ -1,7 +1,7 @@
 """
 amass_normalizer.py
 
-Lit les sorties brutes de scanner/amass.py (scanner/scans/amass_*.txt) et
+Lit les sorties brutes de scanner/amass.py (scans/amass_*.txt) et
 produit normalizers/amass_normalized.json au schema commun du projet
 (voir censys_normalizer.py) :
 
@@ -31,11 +31,19 @@ import re
 from datetime import datetime, timezone
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCANS_DIR = os.path.join(BASE_DIR, "scanner", "scans")
+SCANS_DIR = os.path.join(BASE_DIR, "scans")
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "amass_normalized.json")
 
 FILE_PREFIX = "amass_"
 FQDN_TOKEN_RE = re.compile(r"([a-zA-Z0-9][a-zA-Z0-9.\-]*)\s*\(FQDN\)")
+HOSTNAME_RE = re.compile(
+    r"^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?"
+    r"(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+\.?$"
+)
+
+
+def belongs_to_domain(name, domain):
+    return name == domain or name.endswith(f".{domain}")
 
 
 def read_file_content(filepath):
@@ -60,9 +68,14 @@ def read_hostnames(filepath, domain):
         return set()
 
     names = set()
-    for match in FQDN_TOKEN_RE.finditer(content):
-        name = match.group(1).strip().lower().rstrip(".")
-        if name.endswith(domain):
+    if "(FQDN)" in content:
+        candidates = (match.group(1) for match in FQDN_TOKEN_RE.finditer(content))
+    else:
+        candidates = content.splitlines()
+
+    for candidate in candidates:
+        name = candidate.strip().lower().rstrip(".")
+        if HOSTNAME_RE.fullmatch(name) and belongs_to_domain(name, domain):
             names.add(name)
     return names
 

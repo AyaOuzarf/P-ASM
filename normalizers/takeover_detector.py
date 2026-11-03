@@ -16,7 +16,7 @@ Deux signaux, cumulables :
      NXDOMAIN) - signal fort de ressource abandonnee, quel que soit le
      fournisseur.
 
-Source des donnees : les fichiers scanner/scans/amass_*.txt (sortie brute
+Source des donnees : les fichiers scans/amass_*.txt (sortie brute
 "amass enum -passive"), qui contiennent deja les relations CNAME sous la
 forme :
     "sous.domaine.com (FQDN) --> cname_record --> cible.exemple.com (FQDN)"
@@ -41,7 +41,7 @@ import re
 import socket
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCANS_DIR = os.path.join(BASE_DIR, "scanner", "scans")
+SCANS_DIR = os.path.join(BASE_DIR, "scans")
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "takeover_findings.json")
 
 FILE_PREFIX = "amass_"
@@ -53,6 +53,11 @@ CNAME_RE = re.compile(
     r"([a-zA-Z0-9][a-zA-Z0-9.\-]*)\s*\(FQDN\)\s*-->\s*cname_record\s*-->\s*"
     r"([a-zA-Z0-9][a-zA-Z0-9.\-]*)\s*\(FQDN\)"
 )
+
+
+def belongs_to_domain(name, domain):
+    return name == domain or name.endswith(f".{domain}")
+
 
 # Fournisseurs connus pour heberger des ressources "reclamables" par un
 # attaquant si le sous-domaine client n'est plus utilise. Liste non
@@ -116,7 +121,7 @@ def extract_cname_pairs(filepath, domain):
     for match in CNAME_RE.finditer(content):
         source = match.group(1).strip().lower().rstrip(".")
         target = match.group(2).strip().lower().rstrip(".")
-        if source.endswith(domain):
+        if belongs_to_domain(source, domain):
             pairs.append((source, target))
     return pairs
 

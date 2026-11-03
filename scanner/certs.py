@@ -18,7 +18,7 @@ import urllib.request
 import urllib.error
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SCANS_DIR = os.path.join(BASE_DIR, "scans")
+SCANS_DIR = os.path.join(os.path.dirname(BASE_DIR), "scans")
 
 DOMAINS = [
     "sekera-group.com",
@@ -157,8 +157,6 @@ def summarize(domain: str, raw_entries: list) -> dict:
 
 
 def run():
-    os.makedirs(SCANS_DIR, exist_ok=True)
-
     for domain in DOMAINS:
         out_file = os.path.join(SCANS_DIR, f"certs_{domain}.json")
         print(f"[*] crt.sh + Cert Spotter -> {domain}")

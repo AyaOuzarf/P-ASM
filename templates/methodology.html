@@ -1,100 +1,76 @@
 {% extends "layout.html" %}
+{% block title %}Methodology | Sekera{% endblock %}
 {% block content %}
 
-<div class="card shadow-sm mb-4">
+<section class="mb-4">
+  <div class="eyebrow mb-2">How it works</div>
+  <h1 class="page-heading mb-2">Methodology</h1>
+  <p class="page-subtitle mb-0">An external, passive, and explainable view of exposed assets.</p>
+</section>
+
+<section class="row g-3 mb-4" aria-label="Method steps">
+  <div class="col-sm-6 col-xl-3">
+    <article class="method-step">
+      <div class="step-number mb-3">01</div>
+      <h2 class="h6">Discover</h2>
+      <p class="small text-muted mb-0">Subfinder, Amass, Assetfinder, and certificate logs identify public hostnames.</p>
+    </article>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <article class="method-step">
+      <div class="step-number mb-3">02</div>
+      <h2 class="h6">Normalize</h2>
+      <p class="small text-muted mb-0">Results are cleaned, merged, and linked to their sources.</p>
+    </article>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <article class="method-step">
+      <div class="step-number mb-3">03</div>
+      <h2 class="h6">Enrich</h2>
+      <p class="small text-muted mb-0">Certificates, public CVE signals, and takeover indicators add context.</p>
+    </article>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <article class="method-step">
+      <div class="step-number mb-3">04</div>
+      <h2 class="h6">Prioritize</h2>
+      <p class="small text-muted mb-0">An explainable score helps guide review and remediation.</p>
+    </article>
+  </div>
+</section>
+
+<section class="card surface-card mb-4">
   <div class="card-header">
-    <h3 class="mb-0">Méthodologie du projet</h3>
+    <div class="eyebrow">Priorities</div>
+    <h2 class="h5 mb-0 mt-1">Risk scale</h2>
   </div>
   <div class="card-body">
-    <p class="mb-3">
-      Ce projet a été conçu pour rester <strong>passif</strong>, auditable et adapté à un contexte d’entreprise.
-      Il ne dépend pas de scans actifs ou de probes invasives sur les systèmes cibles.
-      Au lieu de cela, il rassemble des signaux publics et vérifiables sur la surface d’attaque.
-    </p>
-
-    <div class="row g-3 mb-4">
-      <div class="col-md-6">
-        <div class="border rounded p-3 h-100">
-          <h5>Objectif</h5>
-          <ul class="mb-0">
-            <li>Identifier les sous-domaines exposés</li>
-            <li>Vérifier la présence de certificats et d’indices de mauvaise posture</li>
-            <li>Corréler avec les vulnérabilités publiques</li>
-            <li>Prioriser les actifs à remédier</li>
-            <li>Expliquer clairement pourquoi un score a été attribué</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="border rounded p-3 h-100">
-          <h5>Principes de sécurité</h5>
-          <ul class="mb-0">
-            <li>Sans scan actif</li>
-            <li>Sans test de vulnérabilité invasif</li>
-            <li>Sans décision basée sur des hypothèses non vérifiées</li>
-            <li>Avec preuve publique et traçabilité des sources</li>
-          </ul>
-        </div>
-      </div>
+    <div class="row g-3">
+      <div class="col-6 col-lg-3"><div class="method-step"><span class="badge priority-P1">P1</span><div class="small text-muted mt-2">Score 9–10 · urgent</div></div></div>
+      <div class="col-6 col-lg-3"><div class="method-step"><span class="badge priority-P2">P2</span><div class="small text-muted mt-2">Score 7–8 · high</div></div></div>
+      <div class="col-6 col-lg-3"><div class="method-step"><span class="badge priority-P3">P3</span><div class="small text-muted mt-2">Score 5–6 · moderate</div></div></div>
+      <div class="col-6 col-lg-3"><div class="method-step"><span class="badge priority-P4">P4</span><div class="small text-muted mt-2">Score 1–4 · low</div></div></div>
     </div>
-
-    <h4 class="mb-3">Flux de travail</h4>
-    <ol>
-      <li>Découverte passive des sous-domaines via Subfinder, Amass et Assetfinder.</li>
-      <li>Normalisation et fusion des résultats pour éviter les doublons.</li>
-      <li>Analyse des certificats TLS pour vérifier leur validité et leur historique.</li>
-      <li>Détection des risques de takeover et des CNAME douteux.</li>
-      <li>Recherche de CVEs dans les sources publiques : NVD, KEV, EPSS, OSV.</li>
-      <li>Calcul d’un score d’entreprise basé sur criticité + exposition + preuve publique.</li>
-      <li>Affichage des résultats avec explication claire et historique de sources.</li>
-    </ol>
-
-    <h4 class="mb-3">Sources utilisées</h4>
-    <div class="table-responsive">
-      <table class="table table-striped table-sm">
-        <thead class="table-light">
-          <tr>
-            <th>Outil / source</th>
-            <th>Rôle</th>
-            <th>Type</th>
-            <th>Vérification</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in sources %}
-          <tr>
-            <td><a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.name }}</a></td>
-            <td>{{ item.purpose }}</td>
-            <td>{{ item.type }}</td>
-            <td><a href="{{ item.url }}" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm">Ouvrir</a></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
-    <h4 class="mb-3">Comment le risque est calculé</h4>
-    <p>
-      Le score final combine plusieurs dimensions : criticité de l’actif, exposition publique,
-      gravité de la CVE, présence dans la liste KEV, score EPSS, statut du certificat et présence
-      d’un signal de takeover. Le but est d’avoir un score explicable et auditable, pas un score
-      basé uniquement sur le nom de domaine.
-    </p>
-
-    <div class="alert alert-info">
-      <strong>Important :</strong> un nom de sous-domaine peut signaler un risque potentiel, mais la vulnérabilité
-      réelle doit être vérifiée avec des sources publiques fiables avant d’être considérée comme prioritaire.
-    </div>
-
-    <h4 class="mb-3">Sources de vérification clés</h4>
-    <ul>
-      <li><a href="https://nvd.nist.gov/" target="_blank" rel="noopener">NVD</a> — vulnérabilités, CVSS et descriptions</li>
-      <li><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA KEV</a> — vulnérabilités connues exploitées</li>
-      <li><a href="https://www.first.org/epss/" target="_blank" rel="noopener">EPSS</a> — probabilité d’exploitation</li>
-      <li><a href="https://osv.dev/" target="_blank" rel="noopener">OSV</a> — vulnérabilités de paquets open source</li>
-      <li><a href="https://crt.sh/" target="_blank" rel="noopener">crt.sh</a> — certificats publics et sous-domaines</li>
-    </ul>
+    <p class="small text-muted mt-3 mb-0">The score combines criticality, exposure, and available evidence. A public signal or hostname alone does not confirm that a system is vulnerable.</p>
   </div>
+</section>
+
+<section class="card surface-card mb-4">
+  <div class="card-header">
+    <div class="eyebrow">Evidence sources</div>
+    <h2 class="h5 mb-0 mt-1">Sources used</h2>
+  </div>
+  <div class="card-body">
+    <div class="d-flex flex-wrap gap-2">
+      {% for item in sources %}
+      <a class="source-chip text-decoration-none" href="{{ item.url }}" target="_blank" rel="noopener">{{ item.name }} <span class="text-muted">· {{ item.type }}</span></a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="notice small">
+  <strong>Important:</strong> the project prioritizes public data and non-intrusive checks. Verify indicators before treating them as confirmed vulnerabilities.
 </div>
 
 {% endblock %}

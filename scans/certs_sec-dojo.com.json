@@ -1,0 +1,35 @@
+{
+  "domain": "sec-dojo.com",
+  "total_unique_subdomains": 4,
+  "rejected_malformed": [],
+  "subdomains": [
+    {
+      "subdomain": "jet.sec-dojo.com",
+      "domain": "sec-dojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE2",
+      "valid_from": "2026-09-09T05:52:42Z",
+      "valid_to": "2026-12-08T05:52:41Z"
+    },
+    {
+      "subdomain": "sec-dojo.com",
+      "domain": "sec-dojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YR2",
+      "valid_from": "2026-10-15T19:05:24Z",
+      "valid_to": "2027-01-13T19:05:23Z"
+    },
+    {
+      "subdomain": "sentry.sec-dojo.com",
+      "domain": "sec-dojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE2",
+      "valid_from": "2026-09-08T00:08:12Z",
+      "valid_to": "2026-12-07T00:08:11Z"
+    },
+    {
+      "subdomain": "vpn.sec-dojo.com",
+      "domain": "sec-dojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE2",
+      "valid_from": "2026-09-05T16:47:15Z",
+      "valid_to": "2026-12-04T16:47:14Z"
+    }
+  ]
+}

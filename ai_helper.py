@@ -47,7 +47,7 @@ class FreeAIHelper:
                 {
                     "role": "system",
                     "content": (
-                        "You are a cyber security assistant. Summarize the risk in clear French or English. "
+                        "You are a cyber security assistant. Summarize the risk in clear English. "
                         "Never invent facts. Only use the evidence provided."
                     ),
                 },
@@ -86,14 +86,14 @@ class FreeAIHelper:
 
     def _fallback_summary(self, asset: Dict[str, Any]) -> str:
         name = asset.get("subdomain", "unknown")
-        risk_label = asset.get("risk_label", "inconnu")
+        risk_label = asset.get("risk_label", "unknown")
         score = asset.get("score", 0)
-        category = asset.get("category", "Autres")
+        category = asset.get("category", "Other")
         notes = asset.get("notes", "")
         return (
-            f"{name} est classé {risk_label} avec un score de {score}. "
-            f"Catégorie : {category}. "
-            f"Éléments de risque observés : {notes or 'Aucun signal détaillé disponible.'}"
+            f"{name} is rated {risk_label} with a score of {score}. "
+            f"Category: {category}. "
+            f"Observed risk evidence: {notes or 'No detailed evidence is available.'}"
         )
 
 

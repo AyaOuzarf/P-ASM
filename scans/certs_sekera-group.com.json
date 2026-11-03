@@ -1,0 +1,42 @@
+{
+  "domain": "sekera-group.com",
+  "total_unique_subdomains": 5,
+  "rejected_malformed": [],
+  "subdomains": [
+    {
+      "subdomain": "gitlab.sekera-group.com",
+      "domain": "sekera-group.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE1",
+      "valid_from": "2026-09-03T14:17:54Z",
+      "valid_to": "2026-12-02T14:17:53Z"
+    },
+    {
+      "subdomain": "hub.sekera-group.com",
+      "domain": "sekera-group.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE1",
+      "valid_from": "2026-09-16T14:23:47Z",
+      "valid_to": "2026-12-15T14:23:46Z"
+    },
+    {
+      "subdomain": "registry.sekera-group.com",
+      "domain": "sekera-group.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE2",
+      "valid_from": "2026-09-03T15:01:49Z",
+      "valid_to": "2026-12-02T15:01:48Z"
+    },
+    {
+      "subdomain": "sekera-group.com",
+      "domain": "sekera-group.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE1",
+      "valid_from": "2026-10-09T23:03:48Z",
+      "valid_to": "2027-01-07T23:03:47Z"
+    },
+    {
+      "subdomain": "www.sekera-group.com",
+      "domain": "sekera-group.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE1",
+      "valid_from": "2026-10-09T23:03:48Z",
+      "valid_to": "2027-01-07T23:03:47Z"
+    }
+  ]
+}

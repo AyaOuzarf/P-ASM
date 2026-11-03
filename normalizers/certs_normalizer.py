@@ -1,7 +1,7 @@
 """
 certs_normalizer.py
 
-Lit tous les fichiers scanner/scans/certs_*.json (sortie de scanner/certs.py)
+Lit tous les fichiers scans/certs_*.json (sortie de scanner/certs.py)
 et produit deux vues agregees dans normalizers/certs_normalized.json :
 
 - "by_domain"   : statistiques globales par domaine racine (nombre de
@@ -35,7 +35,7 @@ import os
 from datetime import datetime, timezone
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCANS_DIR = os.path.join(BASE_DIR, "scanner", "scans")
+SCANS_DIR = os.path.join(BASE_DIR, "scans")
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certs_normalized.json")
 
 

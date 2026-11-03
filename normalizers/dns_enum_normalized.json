@@ -1,0 +1,353 @@
+{
+  "by_domain": {
+    "sec-dojo.com": {
+      "total_subdomains": 35,
+      "by_source_count": {
+        "subfinder": 34,
+        "amass": 1
+      }
+    },
+    "secdojo.com": {
+      "total_subdomains": 6,
+      "by_source_count": {
+        "subfinder": 5,
+        "amass": 1
+      }
+    },
+    "sekera-group.com": {
+      "total_subdomains": 6,
+      "by_source_count": {
+        "subfinder": 5,
+        "amass": 1
+      }
+    },
+    "vinci-logic.com": {
+      "total_subdomains": 3,
+      "by_source_count": {
+        "subfinder": 2,
+        "amass": 1
+      }
+    },
+    "vincilogic.com": {
+      "total_subdomains": 2,
+      "by_source_count": {
+        "subfinder": 1,
+        "amass": 1
+      }
+    }
+  },
+  "by_subdomain": {
+    "vpn.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "grafana.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "cyberlearn.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "bo-cyberlab.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "ns1.ip.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "support.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "pp.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "www.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "bo-login.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "labs.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "51-44-10-130.ip.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "elearning.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "account.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "sentry.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "ip.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "cyberwar.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "wildcard.ip.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "stgbackend.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "cyberlab.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "africa-ctf.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "postiz.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "bo-support.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "staging.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "cyberchef.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "cyber-awareness.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "jet.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "rra.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "login.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "ecowas-hackathon.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "locust.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "prometheus.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "bo-cyberwar.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "stgfrontend.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "bo-cyberlearn.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "redmine.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "www.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "registry.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "gitlab.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "enterprise.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "www.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "odoo.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "gitlab.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "registry.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "hub.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "eu-fr-01.vinci-logic.com": {
+      "domain": "vinci-logic.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "local-ma-01.vinci-logic.com": {
+      "domain": "vinci-logic.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "www.vincilogic.com": {
+      "domain": "vincilogic.com",
+      "sources": [
+        "subfinder"
+      ]
+    },
+    "sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "amass"
+      ]
+    },
+    "secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "amass"
+      ]
+    },
+    "sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "amass"
+      ]
+    },
+    "vinci-logic.com": {
+      "domain": "vinci-logic.com",
+      "sources": [
+        "amass"
+      ]
+    },
+    "vincilogic.com": {
+      "domain": "vincilogic.com",
+      "sources": [
+        "amass"
+      ]
+    }
+  }
+}

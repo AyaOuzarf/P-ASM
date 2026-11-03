@@ -1,0 +1,229 @@
+{
+  "by_domain": {
+    "sec-dojo.com": {
+      "total_subdomains": 4,
+      "active_subdomains": 4,
+      "rejected_malformed_count": 0,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE2",
+        "C=US, O=Let's Encrypt, CN=YR2"
+      ],
+      "soonest_expiry": "2026-12-04T16:47:14+00:00"
+    },
+    "secdojo.com": {
+      "total_subdomains": 6,
+      "active_subdomains": 6,
+      "rejected_malformed_count": 0,
+      "issuers": [
+        "C=US, O=Google Trust Services, CN=WE1",
+        "C=US, O=Let's Encrypt, CN=YE1",
+        "C=US, O=Let's Encrypt, CN=YE2",
+        "C=US, O=Let's Encrypt, CN=YR1"
+      ],
+      "soonest_expiry": "2026-12-24T09:05:28+00:00"
+    },
+    "sekera-group.com": {
+      "total_subdomains": 5,
+      "active_subdomains": 5,
+      "rejected_malformed_count": 0,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE1",
+        "C=US, O=Let's Encrypt, CN=YE2"
+      ],
+      "soonest_expiry": "2026-12-02T14:17:53+00:00"
+    },
+    "vinci-logic.com": {
+      "total_subdomains": 2,
+      "active_subdomains": 2,
+      "rejected_malformed_count": 0,
+      "issuers": [
+        "C=US, O=Google Trust Services, CN=WE1",
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "soonest_expiry": "2026-12-24T00:32:49+00:00"
+    },
+    "vincilogic.com": {
+      "total_subdomains": 2,
+      "active_subdomains": 1,
+      "rejected_malformed_count": 0,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=R12",
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "soonest_expiry": "2025-12-16T18:06:40+00:00"
+    }
+  },
+  "by_subdomain": {
+    "jet.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE2"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-08T05:52:41+00:00"
+    },
+    "sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YR2"
+      ],
+      "active": true,
+      "soonest_expiry": "2027-01-13T19:05:23+00:00"
+    },
+    "sentry.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE2"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-07T00:08:11+00:00"
+    },
+    "vpn.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE2"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-04T16:47:14+00:00"
+    },
+    "enterprise.secdojo.com": {
+      "domain": "secdojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Google Trust Services, CN=WE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2027-01-09T15:06:14+00:00"
+    },
+    "gitlab.secdojo.com": {
+      "domain": "secdojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE2"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-25T11:57:35+00:00"
+    },
+    "redmine.secdojo.com": {
+      "domain": "secdojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YR1"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-24T09:05:28+00:00"
+    },
+    "registry.secdojo.com": {
+      "domain": "secdojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE2"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-25T11:57:35+00:00"
+    },
+    "secdojo.com": {
+      "domain": "secdojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2027-01-06T21:58:27+00:00"
+    },
+    "www.secdojo.com": {
+      "domain": "secdojo.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YR1"
+      ],
+      "active": true,
+      "soonest_expiry": "2027-01-03T23:04:26+00:00"
+    },
+    "gitlab.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-02T14:17:53+00:00"
+    },
+    "hub.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-15T14:23:46+00:00"
+    },
+    "registry.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE2"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-02T15:01:48+00:00"
+    },
+    "sekera-group.com": {
+      "domain": "sekera-group.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2027-01-07T23:03:47+00:00"
+    },
+    "www.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2027-01-07T23:03:47+00:00"
+    },
+    "local-ma-01.vinci-logic.com": {
+      "domain": "vinci-logic.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-12-24T00:32:49+00:00"
+    },
+    "vinci-logic.com": {
+      "domain": "vinci-logic.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Google Trust Services, CN=WE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2027-01-06T07:44:25+00:00"
+    },
+    "vincilogic.com": {
+      "domain": "vincilogic.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=YE1"
+      ],
+      "active": true,
+      "soonest_expiry": "2026-11-26T18:57:34+00:00"
+    },
+    "www.vincilogic.com": {
+      "domain": "vincilogic.com",
+      "count": 1,
+      "issuers": [
+        "C=US, O=Let's Encrypt, CN=R12"
+      ],
+      "active": false,
+      "soonest_expiry": "2025-12-16T18:06:40+00:00"
+    }
+  }
+}

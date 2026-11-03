@@ -1,6 +1,6 @@
 """
 amass.py - lance Amass en mode strictement passif sur les domaines du
-perimetre et sauvegarde une sortie brute .txt par domaine dans scanner/scans/.
+perimetre et sauvegarde une sortie brute .txt par domaine dans scans/ a la racine.
 
 Mode -passive : aucune requete n'est envoyee a la cible elle-meme, seules des
 sources tierces sont interrogees (resolveurs DNS publics, bases de certificats).
@@ -11,7 +11,7 @@ import subprocess
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-SCANS_DIR = os.path.join(BASE_DIR, "scans")
+SCANS_DIR = os.path.join(os.path.dirname(BASE_DIR), "scans")
 
 DOMAINS = [
     "sekera-group.com",
@@ -25,7 +25,6 @@ TIMEOUT_SECONDS = 300  # Amass -passive peut etre lent selon le domaine
 
 
 def run():
-    os.makedirs(SCANS_DIR, exist_ok=True)
     for domain in DOMAINS:
         out_file = os.path.join(SCANS_DIR, f"amass_{domain}.txt")
         print(f"[*] Amass (-passive) -> {domain}")

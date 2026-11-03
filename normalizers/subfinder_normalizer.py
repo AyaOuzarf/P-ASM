@@ -1,7 +1,7 @@
 """
 subfinder_normalizer.py
 
-Lit les sorties brutes de scanner/subfinder.py (scanner/scans/subfinder_*.txt)
+Lit les sorties brutes de scanner/subfinder.py (scans/subfinder_*.txt)
 - un sous-domaine par ligne - et produit normalizers/subfinder_normalized.json
 au schema commun du projet (voir censys_normalizer.py) :
 
@@ -21,10 +21,14 @@ import os
 from datetime import datetime, timezone
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCANS_DIR = os.path.join(BASE_DIR, "scanner", "scans")
+SCANS_DIR = os.path.join(BASE_DIR, "scans")
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "subfinder_normalized.json")
 
 FILE_PREFIX = "subfinder_"
+
+
+def belongs_to_domain(name, domain):
+    return name == domain or name.endswith(f".{domain}")
 
 
 def read_file_content(filepath):
@@ -51,7 +55,7 @@ def read_hostnames(filepath, domain):
     names = set()
     for line in content.splitlines():
         name = line.strip().lower()
-        if name and name.endswith(domain):
+        if belongs_to_domain(name, domain):
             names.add(name)
     return names
 

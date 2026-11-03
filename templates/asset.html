@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<a href="/" class="btn btn-outline-secondary btn-sm mb-3">&larr; Retour</a>
+<a href="/" class="btn btn-outline-secondary btn-sm mb-3">&larr; Back to dashboard</a>
 
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
@@ -10,74 +10,64 @@
   </div>
   <div class="card-body">
     <dl class="row mb-0">
-      <dt class="col-sm-3">Domaine racine</dt>
+      <dt class="col-sm-3">Root domain</dt>
       <dd class="col-sm-9">{{ asset.root_domain }}</dd>
 
-      <dt class="col-sm-3">Catégorie</dt>
+      <dt class="col-sm-3">Category</dt>
       <dd class="col-sm-9">{{ asset.category }}</dd>
 
-      <dt class="col-sm-3">Disponibilité</dt>
+      <dt class="col-sm-3">Availability</dt>
       <dd class="col-sm-9">
         {% if asset.alive is sameas true %}
-          <span class="badge bg-success">Répond en HTTP ({{ asset.http_status }}, {{ asset.scheme }})</span>
+          <span class="badge bg-success">Responds over HTTP ({{ asset.http_status }}, {{ asset.scheme }})</span>
         {% elif asset.alive is sameas false %}
-          <span class="badge bg-secondary">Injoignable</span>
+          <span class="badge bg-secondary">Unreachable</span>
         {% else %}
-          <span class="badge bg-light text-dark">Non vérifié</span>
+          <span class="badge bg-light text-dark">Not checked</span>
         {% endif %}
       </dd>
 
-      <dt class="col-sm-3">Ports détectés</dt>
+      <dt class="col-sm-3">Detected ports</dt>
       <dd class="col-sm-9">
         {% if asset.ports %}
           {% for p in asset.ports %}
             <span class="badge bg-dark">{{ p.port }}/{{ p.proto }} {{ p.service or '' }}</span>
           {% endfor %}
         {% else %}
-          <span class="text-muted">Aucun (ou asm_tool.py pas encore exécuté)</span>
+          <span class="text-muted">None (or the port scanner has not been run)</span>
         {% endif %}
       </dd>
 
-      <dt class="col-sm-3">Justification du score</dt>
+      <dt class="col-sm-3">Score explanation</dt>
       <dd class="col-sm-9">{{ asset.notes }}</dd>
-
-      <dt class="col-sm-3">Résumé IA</dt>
-      <dd class="col-sm-9">
-        <div class="alert alert-light border small mb-2">{{ asset.ai_summary }}</div>
-        {% if asset.ai_remote_enabled %}
-          <div class="small text-success">Assistant externe activé. Le résumé reste limité aux preuves collectées.</div>
-        {% else %}
-          <div class="small text-muted">Résumé local activé. Pour utiliser une IA externe gratuite, configurez `ENABLE_AI_SUMMARY=true` et une clé dans `.env`.</div>
-        {% endif %}
-      </dd>
 
       <dt class="col-sm-3">Sources</dt>
       <dd class="col-sm-9">
         {% for s in asset.sources %}<span class="badge bg-info text-dark">{{ s }}</span>{% endfor %}
       </dd>
 
-      <dt class="col-sm-3">Certificat TLS</dt>
+      <dt class="col-sm-3">TLS certificate</dt>
       <dd class="col-sm-9">
         {% if asset.certificate %}
-          {% if asset.certificate.active %}<span class="badge bg-success">Actif</span>
-          {% else %}<span class="badge bg-warning text-dark">Expiré</span>{% endif %}
-          — émetteur(s) : {{ asset.certificate.issuers | join(", ") }}
-          — expiration : {{ asset.certificate.soonest_expiry or "inconnue" }}
+          {% if asset.certificate.active %}<span class="badge bg-success">Active</span>
+          {% else %}<span class="badge bg-warning text-dark">Expired</span>{% endif %}
+          — issuer(s): {{ asset.certificate.issuers | join(", ") }}
+          — expires: {{ asset.certificate.soonest_expiry or "unknown" }}
         {% else %}
-          <span class="text-muted">Aucun certificat connu</span>
+          <span class="text-muted">No certificate data available</span>
         {% endif %}
       </dd>
 
       <dt class="col-sm-3">Subdomain takeover</dt>
       <dd class="col-sm-9">
         {% if asset.takeover_risk %}
-          <span class="badge bg-danger">Vulnérable (confiance {{ asset.takeover_risk.confidence }})</span>
+          <span class="badge bg-danger">Potential risk ({{ asset.takeover_risk.confidence }} confidence)</span>
           <div class="mt-1">
-            CNAME pointe vers <code>{{ asset.takeover_risk.cname_target }}</code>
+            CNAME points to <code>{{ asset.takeover_risk.cname_target }}</code>
             {% if asset.takeover_risk.service_hint %}({{ asset.takeover_risk.service_hint }}){% endif %}
           </div>
         {% else %}
-          <span class="text-muted">Aucun signal détecté</span>
+          <span class="text-muted">No signal detected</span>
         {% endif %}
       </dd>
 
@@ -86,7 +76,7 @@
         {% if asset.cve_findings or asset.verified_vulns %}
           {% if asset.verified_vulns %}
             <div class="alert alert-success small mb-2">
-              ✅ Vulnérabilités publiques vérifiées via NVD / KEV / EPSS / OSV. Ce niveau est plus fiable qu'un simple mot-clé.
+              ✅ Public vulnerability evidence checked against NVD / KEV / EPSS / OSV. This is more reliable than a keyword match alone.
             </div>
             {% for cve in asset.verified_vulns[:5] %}
               <div class="border rounded p-2 mb-2">
@@ -107,12 +97,12 @@
 
           {% if asset.cve_findings %}
             <div class="alert alert-warning small mb-2">
-              ⚠️ Correspondances par mot-clé (fingerprinting de bannière) — à vérifier manuellement avant traitement, pas une confirmation d'exploitabilité.
+              ⚠️ Keyword matches from banner fingerprinting — verify manually; these do not confirm exploitability.
             </div>
             {% for entry in asset.cve_findings %}
               <div class="mb-3">
                 <strong>Port {{ entry.port }} ({{ entry.service }})</strong>
-                <div class="text-muted small mb-1">Bannière : <code>{{ entry.banner }}</code> — recherche : "{{ entry.matched_query }}"</div>
+                <div class="text-muted small mb-1">Banner: <code>{{ entry.banner }}</code> — query: "{{ entry.matched_query }}"</div>
                 {% for cve in entry.cves %}
                   <div class="border rounded p-2 mb-1">
                     <a href="https://nvd.nist.gov/vuln/detail/{{ cve.cve_id }}" target="_blank" rel="noopener">
@@ -130,11 +120,11 @@
             {% endfor %}
           {% endif %}
         {% else %}
-          <span class="text-muted">Aucune CVE vérifiée ou détectée pour cet actif</span>
+          <span class="text-muted">No verified or detected CVEs for this asset</span>
         {% endif %}
       </dd>
 
-      <dt class="col-sm-3">Confiance</dt>
+      <dt class="col-sm-3">Confidence</dt>
       <dd class="col-sm-9">
         <div class="progress" style="height: 20px; max-width: 300px;">
           <div class="progress-bar" style="width: {{ asset.confidence }}%;">{{ asset.confidence }}%</div>

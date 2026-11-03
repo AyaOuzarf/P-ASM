@@ -1,0 +1,498 @@
+GUIDE D'ENTRETIEN - PROJET P-ASM
+================================
+
+Objectif de ce document
+-----------------------
+Ce guide sert a preparer une presentation orale du projet P-ASM et a repondre
+aux questions techniques courantes. Il decrit le code du projet tel qu'il est
+actuellement. Il distingue les fonctions implementees, les integrations
+optionnelles et les limites connues. Ne presente pas une fonction optionnelle
+ou incomplete comme une fonctionnalite entierement operationnelle.
+
+
+1. PRESENTATION DU PROJET
+=========================
+
+Version courte - environ 30 secondes
+------------------------------------
+"J'ai contribue a un projet EASM, c'est-a-dire a l'inventaire de la surface
+d'attaque externe d'une organisation. Le projet rassemble des sous-domaines
+trouves par plusieurs sources publiques, normalise les resultats, les enrichit
+avec des informations de certificats et de vulnerabilites, puis les affiche
+dans un dashboard Flask. Un moteur de risque fournit une priorite et une
+explication pour aider a decider quels actifs examiner en premier. Le projet
+est concu pour etre passif en priorite ; les resultats restent des pistes a
+verifier, pas des preuves automatiques d'exploitabilite."
+
+Version plus detaillee - environ 1 a 2 minutes
+----------------------------------------------
+"Le besoin est de savoir quels noms de domaine et sous-domaines sont visibles
+publiquement et de reunir les informations qui sont souvent dispersees entre
+plusieurs outils. Subfinder, Amass et Assetfinder sont utilises pour decouvrir
+des sous-domaines. Les journaux publics de certificats TLS peuvent en reveler
+d'autres. Les resultats sont ensuite normalises en JSON pour que l'application
+puisse les fusionner par nom d'hote et garder la provenance de chaque resultat.
+
+Le projet ajoute ensuite certains signaux : certificats inactifs, relations
+CNAME pouvant indiquer un risque de subdomain takeover et informations CVE
+issues de sources publiques. Le moteur de risque combine ces elements avec une
+estimation de criticite et d'exposition. Enfin, une application Flask permet
+de consulter, filtrer et exporter l'inventaire. L'objectif est d'aider au tri
+et a l'investigation, et non de prouver automatiquement qu'un systeme est
+vulnerable."
+
+Conseil de formulation personnelle
+----------------------------------
+Utilise "j'ai contribue au developpement" si le projet etait realise en equipe.
+Ne dis "j'ai concu seul" ou "j'ai implemente completement" que si cela reflete
+vraiment ton travail personnel. Pour les resultats, ne donne pas de chiffres
+sans les avoir mesures et verifies.
+
+
+2. OBJECTIF ET PERIMETRE
+========================
+
+EASM signifie External Attack Surface Management : identifier et organiser les
+actifs numeriques visibles depuis Internet afin de mieux les surveiller.
+
+Dans ce projet, l'unite principale est le sous-domaine, par exemple
+"vpn.exemple.com". L'application combine des enregistrements provenant de
+plusieurs outils, ajoute des signaux publics disponibles et affiche une
+priorite de revue.
+
+Le projet est passif en priorite : il s'appuie principalement sur des donnees
+publiques et sur les sorties des outils de reconnaissance. Le dashboard peut
+faire un controle HTTP HEAD optionnel pour verifier si un hote repond. Ce
+controle envoie une requete vers l'hote : il faut donc le garder desactive sauf
+si le perimetre est autorise.
+
+Le projet n'est pas un scanner d'exploitation, un test d'intrusion complet, ni
+une preuve qu'une vulnerabilite est exploitable.
+
+
+3. ARCHITECTURE ET CYCLE DES DONNEES
+====================================
+
+1. Les collecteurs obtiennent des noms de sous-domaines ou des donnees de
+   certificats.
+2. Les sorties brutes sont sauvegardees dans des fichiers texte ou JSON.
+3. Les normalizers nettoient les resultats et les convertissent vers des
+   structures JSON utilisees par le projet.
+4. app.py charge et fusionne les enregistrements par sous-domaine. Il garde
+   aussi la liste des sources qui ont trouve chaque actif.
+5. vulnerability_sources.py recherche des informations CVE publiques a partir
+   de mots-cles associes aux actifs et aux services connus.
+6. risk_engine.py transforme le contexte et les preuves disponibles en score,
+   priorite et justification.
+7. Les templates Jinja affichent l'inventaire, les details et la methodologie.
+
+Modules principaux
+------------------
+- app.py : application Flask, chargement JSON, fusion des actifs, filtrage,
+  construction des statistiques, routes web et export JSON.
+- vulnerability_sources.py : appels best-effort a NVD, CISA KEV, EPSS et OSV;
+  ce module recueille les informations mais ne calcule pas le score final.
+- risk_engine.py : fonctions de score et de priorite; il ne lance pas les
+  scanners et n'appelle pas les API publiques.
+- ai_helper.py : resume local ou appel optionnel a un service IA compatible.
+- scanner/ : wrappers Python qui lancent les collecteurs ou interrogent les
+  sources de certificats et Shodan.
+- normalizers/ : parsers, detection de takeover, autres integrations et
+  fichiers JSON normalises.
+- templates/ : pages HTML du dashboard.
+- tests/test_risk_engine.py : tests du calcul de priorite du moteur de risque.
+
+Routes principales
+------------------
+- / : tableau des actifs et filtres.
+- /asset/<id> : details d'un actif.
+- /methodology : sources et methode.
+- /export.json : export JSON de l'inventaire et des statistiques.
+
+
+4. DIFFERENCE ENTRE LES OUTILS DE DECOUVERTE
+============================================
+
+Subfinder
+---------
+Role : trouver passivement des sous-domaines a partir de sources publiques.
+Sortie dans ce projet : une liste de noms d'hotes par domaine.
+Pourquoi l'utiliser : c'est une source dediee a la decouverte de sous-domaines.
+Wrapper du projet : scanner/subfinder.py.
+
+Amass
+-----
+Role : enumere des informations de domaine et peut produire des relations DNS,
+comme des enregistrements A ou CNAME.
+Pourquoi l'utiliser : en plus de fournir des noms, ses relations peuvent aider
+l'analyse des CNAME utilisee par le detecteur de takeover.
+Wrapper du projet : scanner/amass.py, execute en mode passif.
+
+Assetfinder
+-----------
+Role : recherche des sous-domaines avec une autre couverture de sources.
+Pourquoi l'utiliser : une source supplementaire peut trouver un nom absent des
+resultats Subfinder ou Amass.
+Wrapper du projet : scanner/assetfinder.py.
+Le wrapper et le normalizer lisent/ecrivent dans le dossier scans/ a la racine
+du projet, partage avec les autres outils.
+
+crt.sh et Cert Spotter
+----------------------
+Role : consulter des Certificate Transparency logs, registres publics des
+certificats TLS emis.
+Pourquoi l'utiliser : les noms inscrits dans un certificat peuvent reveler un
+sous-domaine que les sources de reconnaissance n'ont pas retourne.
+Wrapper du projet : scanner/certs.py.
+Limite d'interpretation : l'existence d'un certificat ne prouve ni que le site
+est joignable aujourd'hui, ni qu'il est vulnerable.
+
+Shodan
+------
+Role : moteur de recherche qui indexe des services accessibles depuis Internet
+et peut fournir des informations sur des hotes, ports, organisations ou
+certificats.
+Utilisation dans le projet : surtout une recherche manuelle dans l'interface
+Shodan, suivie d'une verification du resultat. Le depot contient aussi
+scanner/shodan_scanner.py, un wrapper API optionnel qui cherche par nom de
+certificat. Cette integration n'est pas une entree du flux principal du
+dashboard. Les recherches API necessitent une cle et peuvent consommer des
+credits de recherche.
+Pourquoi le consulter manuellement : cela permet de verifier le contexte et
+la pertinence du resultat avant de le reporter, et de ne pas faire dependre le
+flux principal d'une API ou de credits Shodan.
+
+Censys
+------
+Role : autre source de recherche de services et certificats visibles sur
+Internet.
+Dans ce depot : normalizers/censys_normalizer.py accepte des donnees collectees
+manuellement. Il n'y a pas de collecteur Censys automatise et l'app ne charge
+pas actuellement cette sortie.
+
+Comment expliquer le choix de plusieurs sources ?
+-------------------------------------------------
+"Les sources n'ont pas toutes la meme couverture. J'utilise plusieurs outils
+pour augmenter les chances de decouvrir des noms differents et pour comparer
+la provenance des resultats. Un nom trouve par plusieurs sources est mieux
+corrobore, mais cela ne prouve pas qu'il presente une vulnerabilite."
+
+
+5. SOURCES DE VULNERABILITES - vulnerability_sources.py
+=======================================================
+
+Ce module enrichit les actifs avec des informations de vulnerabilites publiques.
+Il ne teste pas le service de l'actif et ne connait pas automatiquement son
+produit et sa version. Il construit des mots-cles depuis les labels du
+sous-domaine et, si disponibles, les noms de services.
+
+Etape 1 - construire les mots-cles
+----------------------------------
+- Les labels de sous-domaines sont candidats, sauf les deux derniers labels.
+- Les noms de services fournis peuvent aussi etre candidats.
+- Les termes generiques comme www, api, login, vpn et admin sont retires.
+- Le module garde au maximum huit candidats.
+
+Etape 2 - rechercher dans NVD
+-----------------------------
+NVD est la source principale de CVE dans ce flux. Pour chaque mot-cle, le code
+demande jusqu'a trois resultats et extrait l'identifiant CVE, la description,
+le CVSS et la severite. Les resultats sont regroupes par identifiant.
+Une recherche par mot-cle ne confirme pas que l'hote utilise le produit ou la
+version affectee.
+
+Etape 3 - enrichir avec CISA KEV
+--------------------------------
+Le module telecharge le catalogue CISA Known Exploited Vulnerabilities. Il
+ajoute le contexte KEV aux CVE deja trouvees par NVD, par exemple la date
+d'ajout et une courte description. Il ne cree pas une correspondance d'actif
+independante a partir de toutes les entrees KEV.
+
+Etape 4 - enrichir avec EPSS
+----------------------------
+Pour chaque CVE NVD retenue, le module demande a EPSS une estimation de
+probabilite d'exploitation et un percentile. EPSS est une estimation, pas une
+certitude qu'une attaque aura lieu.
+
+Etape 5 - consulter OSV
+-----------------------
+OSV est interroge pour les noms de paquets/services fournis. Dans le code
+actuel, un resultat OSV n'est rattache a l'enregistrement que si son CVE ID
+correspond a une CVE deja trouvee par NVD.
+
+Resultat renvoye
+----------------
+Les enregistrements combines contiennent notamment cve_id, description,
+cvss_score, cvss_severity, source, epss_score, epss_percentile et, si
+applicable, des champs KEV. En cas d'erreur reseau ou de reponse invalide, les
+fonctions renvoient generalement une liste vide ou None. Une absence de
+resultat signifie donc "aucune correspondance retournee", pas "aucune
+vulnerabilite".
+
+Point important dans l'application actuelle : la fonction qui fournit les
+services connus renvoie une structure vide. En pratique, les mots-cles utilises
+par le dashboard viennent donc surtout du nom du sous-domaine.
+
+Comment expliquer les sources en entretien ?
+---------------------------------------------
+- NVD : "Je l'utilise pour obtenir les informations CVE et le CVSS."
+- CISA KEV : "Je verifie si une CVE est dans le catalogue des vulnerabilites
+  connues comme exploitees."
+- EPSS : "J'ajoute une estimation de la probabilite d'exploitation pour aider
+  a prioriser."
+- OSV : "Je cherche des informations associees aux paquets open source quand
+  j'ai un nom de service ou de paquet exploitable."
+- "Ces sources apportent des indices publics; je ne presente pas une recherche
+  par mot-cle comme preuve qu'une version vulnerable tourne sur l'hote."
+
+
+6. MOTEUR DE RISQUE - risk_engine.py
+====================================
+
+Le moteur ne contacte aucun outil. Il recoit des nombres et des enregistrements
+prepares par l'application, puis retourne des scores, les preuves et une
+justification. Il contient deux fonctions principales.
+
+A. compute_verifiable_risk()
+----------------------------
+Cette fonction commence par :
+
+    score initial = exposition de base x sensibilite de base
+
+Elle peut ensuite relever le score selon les signaux fournis :
+- Takeover present : score minimum 9.
+- CVE avec un CVSS connu : le CVSS est converti vers l'echelle 1-9 par une
+  multiplication approximative par 0,9, puis peut relever le score.
+- Certaines expressions dans la description d'une CVE, telles que "known
+  exploited", "actively exploited", "KEV" ou "CISA" : score minimum 8.
+- Certificat marque inactif : score minimum 6.
+
+Le resultat est limite a l'echelle 1-9 et retourne avec une explication et une
+liste de sources de preuves.
+
+B. calculate_enterprise_risk()
+------------------------------
+Cette fonction combine les entrees suivantes :
+- Criticite de l'actif, bornee entre 1 et 5.
+- Exposition, bornee entre 1 et 5.
+- Plus grand CVSS parmi les CVE fournies.
+- Indicateur KEV.
+- Plus grand EPSS, plafonne a 1.
+- Certificat inactif ou actif.
+- Presence ou absence d'un finding takeover.
+
+Formule actuellement ecrite dans le code :
+
+    score = 0.45 x criticite
+          + 0.25 x exposition
+          + 0.30 x (CVSS / 10) x 5
+          + 0.20 x KEV x 5
+          + 0.15 x EPSS x 5
+          + 0.10 x certificat_inactif x 5
+          + 0.15 x takeover x 5
+
+Les indicateurs KEV, certificat inactif et takeover valent 1 si presents et 0
+sinon. Le score est limite, arrondi, puis traduit en priorite :
+
+    P1 : score >= 9
+    P2 : score >= 7
+    P3 : score >= 5
+    P4 : score < 5
+
+Important - comment parler des coefficients
+------------------------------------------
+Les coefficients sont des valeurs fixes dans le prototype. Le depot ne cite
+pas de norme ou d'etude qui justifierait leurs valeurs exactes. CVSS, KEV et
+EPSS sont des sources/indicateurs reconnus, mais la formule qui les combine
+est propre au projet. Ne dis pas que les poids sont standards ou scientifiquement
+valides.
+
+Reponse honnete si l'on demande "Pourquoi ces poids ?" :
+"Le projet utilise une formule de priorisation personnalisee pour son
+prototype. Les poids actuels sont des valeurs initiales pour combiner les
+signaux, pas une formule standard. Pour un usage en production, il faudrait
+les valider avec les equipes securite et metier, les documenter et les calibrer
+sur des cas reels."
+
+Limitations techniques utiles a connaitre
+-----------------------------------------
+- Avec les coefficients actuels, le score maximum theorique est 8. La priorite
+  P1, dont le seuil est 9, ne peut donc pas etre atteinte.
+- Le test KEV dans calculate_enterprise_risk() considere actuellement qu'un
+  identifiant commencant par CVE- suffit a activer l'indicateur. Cela risque
+  de traiter toute CVE comme une CVE KEV, meme si elle n'est pas dans le
+  catalogue CISA. C'est une limite du code, pas le comportement attendu d'un
+  bon indicateur KEV.
+- Dans app.py, une absence de certificat peut etre convertie en statut faux,
+  puis comprise comme certificat inactif. "Inconnu" devrait etre distingue de
+  "expire ou inactif".
+- La fonction compute_verifiable_risk() produit un premier score, mais l'app
+  utilise ensuite calculate_enterprise_risk() comme score final du dashboard.
+  Le premier score et ses explications ne sont donc pas directement le score
+  final affiche.
+- Il faut confirmer qu'un CVE correspond au produit et a la version de l'actif.
+  Le code actuel ne fait pas de fingerprinting fiable de version.
+
+Reponse possible si l'on demande ce que tu ameliorerais :
+"Je corrigerais d'abord l'indicateur KEV et la distinction entre certificat
+inconnu et certificat inactif. Ensuite, je ferais en sorte que chaque signal
+soit trace, j'ajouterais des tests pour les cas limites et je validerais les
+ponderations avec des analystes et des exemples historiques."
+
+
+7. RESUME IA - ai_helper.py
+===========================
+
+Sans cle API distante, le projet cree une phrase localement a partir des champs
+de l'actif, du score, de sa categorie et des justifications deja calculees.
+Cette operation n'a pas besoin d'un fournisseur IA externe.
+
+Si le mode distant est active et qu'une cle API est fournie, l'application
+transmet les informations de l'actif a un fournisseur compatible et lui
+demande un resume. Cette option est independante du calcul CVE et du score.
+La cle est necessaire uniquement pour cette fonction distante. Avant d'envoyer
+des actifs reels a un service externe, il faut verifier ses conditions de
+confidentialite et de conservation des donnees.
+
+
+8. QUESTIONS FREQUENTES EN ENTRETIEN
+====================================
+
+Q: Quel probleme le projet resout-il ?
+R: Il rassemble des informations publiques sur les sous-domaines d'une
+organisation dans un inventaire unique et aide a prioriser les actifs a
+verifier.
+
+Q: Qu'est-ce que l'EASM ?
+R: C'est la gestion de la surface d'attaque externe. On cherche a connaitre les
+actifs visibles depuis Internet et a surveiller les risques associes.
+
+Q: Pourquoi une approche passive ?
+R: Elle permet de commencer par des sources publiques sans lancer de tests
+intrusifs sur les systemes. Le controle HTTP HEAD est optionnel et doit etre
+utilise uniquement dans un perimetre autorise.
+
+Q: Quelle est la difference entre Subfinder, Amass et Assetfinder ?
+R: Ce sont trois sources de decouverte qui n'ont pas la meme couverture.
+Subfinder est centre sur la decouverte passive, Amass fournit aussi des
+relations de domaine utiles pour les CNAME, et Assetfinder apporte une source
+supplementaire. Les recouper peut faire ressortir davantage de noms.
+
+Q: Pourquoi consulter les certificats TLS ?
+R: Les certificats sont publies dans des journaux de transparence. Leurs noms
+peuvent reveler des sous-domaines, y compris des actifs oublies. Un certificat
+ne prouve pas que l'hote repond actuellement.
+
+Q: Pourquoi Shodan est-il consulte manuellement ?
+R: Shodan peut fournir des informations utiles, mais les resultats doivent etre
+verifies et l'API peut consommer des credits. Dans ce projet, la recherche
+manuelle est un complement; le wrapper API est optionnel et non integre au
+flux principal du dashboard.
+
+Q: CVE, CVSS, KEV et EPSS, quelle difference ?
+R: CVE est l'identifiant d'une vulnerabilite connue. CVSS mesure sa severite.
+KEV indique si elle est presente dans le catalogue des vulnerabilites connues
+comme exploitees de CISA. EPSS estime sa probabilite d'exploitation.
+
+Q: Une CVE trouvee veut-elle dire que le sous-domaine est vulnerable ?
+R: Non. Une correspondance par mot-cle fournit une piste. Il faut verifier le
+produit, la version, la configuration et la pertinence pour l'actif.
+
+Q: Comment le score est-il calcule ?
+R: Le moteur combine criticite, exposition, CVSS, KEV, EPSS, certificat et
+takeover. Une fonction produit un premier score base sur les preuves et une
+autre calcule le score d'entreprise final. La formule est un modele de
+priorisation propre au prototype, pas une norme.
+
+Q: D'ou viennent les poids de la formule ?
+R: Ils sont inscrits comme coefficients initiaux dans le code. Le projet ne
+cite pas de norme qui justifie ces poids. Je les presenterais comme des choix
+de prototype a valider, pas comme des valeurs universelles.
+
+Q: L'IA genere-t-elle le score ou trouve-t-elle les CVE ?
+R: Non. Le score vient du moteur et les donnees de vulnerabilite viennent des
+sources publiques. L'IA peut seulement reformuler les informations deja
+fournies. Le mode distant est optionnel et necessite une cle API.
+
+Q: Que se passe-t-il si une API est indisponible ?
+R: Les appels sont best-effort et peuvent retourner une liste vide. Cela veut
+dire qu'aucune information n'a ete obtenue a ce moment, pas qu'aucune
+vulnerabilite n'existe.
+
+Q: Quelles sont les limites actuelles les plus importantes ?
+R: Les domaines sont configures dans les scripts, le chemin de sortie et de
+lecture d'Assetfinder est incoherent, les ports/services ne sont pas integres
+a l'inventaire, certaines integrations restent autonomes, et la formule de
+risque doit etre corrigee et calibree.
+
+Q: Que ferais-tu ensuite ?
+R: Je corrigerais les chemins de donnees et les signaux KEV/certificat, puis
+j'ajouterais du cache et des tests pour les appels API. Ensuite, je validerais
+le modele de score avec des cas de test metier et rendrais les domaines de
+perimetre configurables a un seul endroit.
+
+Q: Comment mesurer la confiance d'un actif ?
+R: L'application compte les sources de decouverte presentes et les compare au
+nombre de sources possibles. C'est une mesure simple de corroboration, pas une
+probabilite mathematique que l'actif est reel ou vulnerable.
+
+
+9. LIMITES D'INTEGRATION A NE PAS SURVENDRE
+===========================================
+
+- La collecte de sous-domaines Subfinder, Amass et Assetfinder existe, mais
+  leurs scripts utilisent des listes de domaines codees separement.
+- Les normalizers de certificats et de takeover existent; le JSON de
+  certificats est optionnel dans le dashboard.
+- L'inventaire de ports renvoie actuellement une structure vide. Ne dis pas
+  que le dashboard effectue un scan de ports.
+- Shodan a un wrapper API, mais son usage principal dans le projet est manuel
+  et il n'alimente pas le calcul normal du dashboard.
+- Censys est une normalisation de resultats saisis manuellement, pas un
+  collecteur API.
+- threat_intel_scanner.py produit des resultats URLhaus/OTX/AbuseIPDB, mais
+  app.py ne les charge pas actuellement.
+- snapshot_scan.py enregistre des snapshots; l'interface de comparaison de
+  drift n'est pas presente dans les routes Flask.
+- merge_normalizer.py et shodan_normalizer.py ont des attentes de format qui
+  ne correspondent pas aux producteurs actuels.
+- Le dashboard peut lire cve_findings.json, mais aucun producteur de ce
+  fichier n'est fourni dans le depot.
+
+Phrase de synthese prudente :
+"Le projet comporte une chaine principale de decouverte, normalisation,
+priorisation et visualisation, ainsi que plusieurs prototypes d'integration
+complementaires qui restent a raccorder ou a fiabiliser."
+
+
+10. PETIT GLOSSAIRE
+===================
+
+Actif : systeme ou nom de domaine appartenant au perimetre a inventorier.
+
+Sous-domaine : nom sous un domaine, par exemple api.exemple.com.
+
+EASM : External Attack Surface Management, gestion des actifs visibles depuis
+Internet.
+
+CVE : identifiant public d'une vulnerabilite connue.
+
+CVSS : score de severite associe a une vulnerabilite; ce n'est pas le score de
+risque specifique de P-ASM.
+
+KEV : catalogue CISA de vulnerabilites connues comme exploitees.
+
+EPSS : estimation de la probabilite qu'une vulnerabilite soit exploitee.
+
+CNAME : enregistrement DNS qui indique qu'un nom renvoie vers un autre nom.
+
+Subdomain takeover : risque potentiel associe a un sous-domaine qui pointe vers
+une ressource tierce pouvant etre abandonnee ou mal configuree.
+
+Normalisation : conversion de sorties heterogenes vers une structure commune.
+
+Faux positif : resultat signale comme pertinent alors qu'il ne s'applique pas
+reellement a l'actif concerne.
+
+Priorisation : classement qui aide a choisir quoi examiner d'abord; ce n'est
+pas une confirmation de compromission.

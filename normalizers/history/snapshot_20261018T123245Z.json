@@ -1,0 +1,593 @@
+{
+  "timestamp": "2026-10-18T12:32:45.503563+00:00",
+  "subdomains": {
+    "51-44-10-130.ip.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "account.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "africa-ctf.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "bo-cyberlab.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "bo-cyberlearn.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "bo-cyberwar.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "bo-login.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "bo-support.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "cyber-awareness.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "cyberchef.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "cyberlab.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "cyberlearn.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "cyberwar.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "ecowas-hackathon.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "elearning.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "enterprise.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Google Trust Services, CN=WE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2027-01-09T15:06:14+00:00"
+      },
+      "takeover_risk": false
+    },
+    "eu-fr-01.vinci-logic.com": {
+      "domain": "vinci-logic.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "gitlab.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE2"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-25T11:57:35+00:00"
+      },
+      "takeover_risk": false
+    },
+    "gitlab.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-02T14:17:53+00:00"
+      },
+      "takeover_risk": false
+    },
+    "grafana.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "hub.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-15T14:23:46+00:00"
+      },
+      "takeover_risk": false
+    },
+    "ip.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "jet.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE2"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-08T05:52:41+00:00"
+      },
+      "takeover_risk": false
+    },
+    "labs.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "local-ma-01.vinci-logic.com": {
+      "domain": "vinci-logic.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-24T00:32:49+00:00"
+      },
+      "takeover_risk": false
+    },
+    "locust.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "login.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "ns1.ip.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "odoo.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "postiz.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "pp.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "prometheus.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "redmine.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YR1"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-24T09:05:28+00:00"
+      },
+      "takeover_risk": false
+    },
+    "registry.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE2"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-25T11:57:35+00:00"
+      },
+      "takeover_risk": false
+    },
+    "registry.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE2"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-02T15:01:48+00:00"
+      },
+      "takeover_risk": false
+    },
+    "rra.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "amass",
+        "certs"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YR2"
+        ],
+        "active": true,
+        "soonest_expiry": "2027-01-13T19:05:23+00:00"
+      },
+      "takeover_risk": false
+    },
+    "secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "amass",
+        "assetfinder",
+        "certs"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2027-01-06T21:58:27+00:00"
+      },
+      "takeover_risk": false
+    },
+    "sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "amass",
+        "assetfinder",
+        "certs"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2027-01-07T23:03:47+00:00"
+      },
+      "takeover_risk": false
+    },
+    "sentry.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE2"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-07T00:08:11+00:00"
+      },
+      "takeover_risk": false
+    },
+    "staging.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "stgbackend.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "stgfrontend.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "support.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "takeover.demo-fixture.example.com": {
+      "domain": "demo-fixture.example.com",
+      "sources": [
+        "amass",
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": true
+    },
+    "vinci-logic.com": {
+      "domain": "vinci-logic.com",
+      "sources": [
+        "amass",
+        "certs"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Google Trust Services, CN=WE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2027-01-06T07:44:25+00:00"
+      },
+      "takeover_risk": false
+    },
+    "vincilogic.com": {
+      "domain": "vincilogic.com",
+      "sources": [
+        "amass",
+        "assetfinder",
+        "certs"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-11-26T18:57:34+00:00"
+      },
+      "takeover_risk": false
+    },
+    "vpn.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE2"
+        ],
+        "active": true,
+        "soonest_expiry": "2026-12-04T16:47:14+00:00"
+      },
+      "takeover_risk": false
+    },
+    "wildcard.ip.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "www.sec-dojo.com": {
+      "domain": "sec-dojo.com",
+      "sources": [
+        "subfinder"
+      ],
+      "certificate": null,
+      "takeover_risk": false
+    },
+    "www.secdojo.com": {
+      "domain": "secdojo.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YR1"
+        ],
+        "active": true,
+        "soonest_expiry": "2027-01-03T23:04:26+00:00"
+      },
+      "takeover_risk": false
+    },
+    "www.sekera-group.com": {
+      "domain": "sekera-group.com",
+      "sources": [
+        "assetfinder",
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=YE1"
+        ],
+        "active": true,
+        "soonest_expiry": "2027-01-07T23:03:47+00:00"
+      },
+      "takeover_risk": false
+    },
+    "www.vincilogic.com": {
+      "domain": "vincilogic.com",
+      "sources": [
+        "certs",
+        "subfinder"
+      ],
+      "certificate": {
+        "issuers": [
+          "C=US, O=Let's Encrypt, CN=R12"
+        ],
+        "active": false,
+        "soonest_expiry": "2025-12-16T18:06:40+00:00"
+      },
+      "takeover_risk": false
+    }
+  }
+}

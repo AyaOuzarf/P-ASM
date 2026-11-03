@@ -1,0 +1,56 @@
+[
+  {
+    "domain": "sekera-group.com",
+    "ip": "137.74.58.59",
+    "hostnames": [],
+    "organization": "OVH SAS",
+    "asn": "AS16276",
+    "location": "Strasbourg, France",
+    "operating_system": "Canonical Linux",
+    "services": [
+      {
+        "port": 22,
+        "protocol": "SSH",
+        "product": "OpenBSD OpenSSH"
+      }
+    ]
+  },
+  {
+    "domain": "sekera-group.com",
+    "ip": "137.74.58.56",
+    "hostnames": [],
+    "organization": "OVH SAS",
+    "asn": "AS16276",
+    "location": "Strasbourg, France",
+    "services": [
+      {
+        "port": 80,
+        "protocol": "HTTP",
+        "product": "F5 Nginx"
+      },
+      {
+        "port": 443,
+        "protocol": "HTTP",
+        "product": "F5 Nginx"
+      }
+    ]
+  },
+  {
+    "domain": "sekera-group.com",
+    "ip": "51.222.81.248",
+    "hostnames": [
+      "hub.sekera-group.com"
+    ],
+    "organization": "OVH SAS",
+    "asn": "AS16276",
+    "location": "Beauharnois, Quebec, Canada",
+    "operating_system": "Canonical Linux",
+    "services": [
+      {
+        "port": 22,
+        "protocol": "SSH",
+        "product": "OpenBSD OpenSSH"
+      }
+    ]
+  }
+]

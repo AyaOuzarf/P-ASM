@@ -1,0 +1,49 @@
+{
+  "domain": "secdojo.com",
+  "total_unique_subdomains": 6,
+  "rejected_malformed": [],
+  "subdomains": [
+    {
+      "subdomain": "enterprise.secdojo.com",
+      "domain": "secdojo.com",
+      "issuer": "C=US, O=Google Trust Services, CN=WE1",
+      "valid_from": "2026-10-11T14:06:18Z",
+      "valid_to": "2027-01-09T15:06:14Z"
+    },
+    {
+      "subdomain": "gitlab.secdojo.com",
+      "domain": "secdojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE2",
+      "valid_from": "2026-09-26T11:57:36Z",
+      "valid_to": "2026-12-25T11:57:35Z"
+    },
+    {
+      "subdomain": "redmine.secdojo.com",
+      "domain": "secdojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YR1",
+      "valid_from": "2026-09-25T09:05:29Z",
+      "valid_to": "2026-12-24T09:05:28Z"
+    },
+    {
+      "subdomain": "registry.secdojo.com",
+      "domain": "secdojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE2",
+      "valid_from": "2026-09-26T11:57:36Z",
+      "valid_to": "2026-12-25T11:57:35Z"
+    },
+    {
+      "subdomain": "secdojo.com",
+      "domain": "secdojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YE1",
+      "valid_from": "2026-10-08T21:58:28Z",
+      "valid_to": "2027-01-06T21:58:27Z"
+    },
+    {
+      "subdomain": "www.secdojo.com",
+      "domain": "secdojo.com",
+      "issuer": "C=US, O=Let's Encrypt, CN=YR1",
+      "valid_from": "2026-10-05T23:04:27Z",
+      "valid_to": "2027-01-03T23:04:26Z"
+    }
+  ]
+}

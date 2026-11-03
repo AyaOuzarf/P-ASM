@@ -1,8 +1,8 @@
 """
 dns_enum_normalizer.py
 
-Lit les sorties brutes de scanner/subfinder.py (scanner/scans/subfinder_*.txt)
-et scanner/amass.py (scanner/scans/amass_*.txt) - un sous-domaine par ligne -
+Lit les sorties brutes de scanner/subfinder.py (scans/subfinder_*.txt)
+et scanner/amass.py (scans/amass_*.txt) - un sous-domaine par ligne -
 et produit une vue agregee dans normalizers/dns_enum_normalized.json, avec
 la meme convention que certs_normalized.json :
 
@@ -20,7 +20,7 @@ import os
 import re
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCANS_DIR = os.path.join(BASE_DIR, "scanner", "scans")
+SCANS_DIR = os.path.join(BASE_DIR, "scans")
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dns_enum_normalized.json")
 
 # amass enum -passive (sans -json) produit un texte de relations du type :
@@ -30,12 +30,20 @@ OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dns_enum
 # (les CNAME/NS peuvent pointer vers un FQDN externe hors perimetre, filtre
 # ensuite par le suffixe du domaine).
 FQDN_TOKEN_RE = re.compile(r"([a-zA-Z0-9][a-zA-Z0-9.\-]*)\s*\(FQDN\)")
+HOSTNAME_RE = re.compile(
+    r"^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?"
+    r"(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+\.?$"
+)
 
 # (prefixe de fichier, nom de la source, format)
 SOURCES = [
     ("subfinder_", "subfinder", "plain"),
     ("amass_", "amass", "amass_graph"),
 ]
+
+
+def belongs_to_domain(name, domain):
+    return name == domain or name.endswith(f".{domain}")
 
 
 def read_file_content(filepath):
@@ -63,7 +71,7 @@ def read_hostnames_plain(filepath, domain):
     names = set()
     for line in content.splitlines():
         name = line.strip().lower()
-        if name and name.endswith(domain):
+        if belongs_to_domain(name, domain):
             names.add(name)
     return names
 
@@ -78,9 +86,14 @@ def read_hostnames_amass_graph(filepath, domain):
         return set()
 
     names = set()
-    for match in FQDN_TOKEN_RE.finditer(content):
-        name = match.group(1).strip().lower().rstrip(".")
-        if name.endswith(domain):
+    if "(FQDN)" in content:
+        candidates = (match.group(1) for match in FQDN_TOKEN_RE.finditer(content))
+    else:
+        candidates = content.splitlines()
+
+    for candidate in candidates:
+        name = candidate.strip().lower().rstrip(".")
+        if HOSTNAME_RE.fullmatch(name) and belongs_to_domain(name, domain):
             names.add(name)
     return names
 

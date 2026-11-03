@@ -1,9 +1,9 @@
 """
 shodan_normalizer.py
 
-Lit tous les fichiers scanner/scans/shodan_*.json (sortie brute de
-scanner/shodan_scan.py) et les convertit vers un JSON normalise et lisible :
-org, ISP, ports ouverts, vulns, services, etc. par IP.
+Lit les fichiers scans/shodan_*.json produits par scanner/shodan_scanner.py
+et convertit ses resultats (matches) en JSON normalise. Les fichiers Shodan
+plus complets au format raw_hosts restent egalement acceptes.
 """
 import glob
 import json
@@ -11,7 +11,7 @@ import os
 from datetime import datetime, timezone
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCANS_DIR = os.path.join(BASE_DIR, "scanner", "scans")
+SCANS_DIR = os.path.join(BASE_DIR, "scans")
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shodan_normalized.json")
 
 
@@ -27,16 +27,21 @@ def normalize_host(raw: dict) -> dict:
             "timestamp": item.get("timestamp"),
         })
 
+    ports = set(raw.get("ports", []))
+    if raw.get("port") is not None:
+        ports.add(raw["port"])
+    location = raw.get("location") or {}
+
     return {
-        "ip": raw.get("ip_str"),
+        "ip": raw.get("ip_str") or raw.get("ip"),
         "org": raw.get("org"),
         "isp": raw.get("isp"),
         "asn": raw.get("asn"),
-        "country": raw.get("country_name"),
-        "city": raw.get("city"),
+        "country": raw.get("country_name") or location.get("country"),
+        "city": raw.get("city") or location.get("city"),
         "hostnames": raw.get("hostnames", []),
         "domains": raw.get("domains", []),
-        "open_ports": sorted(raw.get("ports", [])),
+        "open_ports": sorted(ports),
         "vulns": sorted(raw.get("vulns", [])) if raw.get("vulns") else [],
         "os": raw.get("os"),
         "last_update": raw.get("last_update"),
@@ -49,7 +54,10 @@ def parse_file(filepath: str) -> tuple[str, list[dict]]:
         record = json.load(f)
 
     domain = record.get("domain", "")
-    hosts = [normalize_host(raw) for raw in record.get("raw_hosts", [])]
+    raw_hosts = record.get("raw_hosts")
+    if raw_hosts is None:
+        raw_hosts = record.get("matches", [])
+    hosts = [normalize_host(raw) for raw in raw_hosts]
     return domain, hosts
 
 

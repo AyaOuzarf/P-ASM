@@ -1,11 +1,6 @@
+
+Session Scope
+
+FQDN:
+
 sec-dojo.com
-login.sec-dojo.com
-cyberlearn.sec-dojo.com
-www.sec-dojo.com
-bo-cyberwar.sec-dojo.com
-bo-support.sec-dojo.com
-bo-cyberlearn.sec-dojo.com
-cyberlab.sec-dojo.com
-bo-account.sec-dojo.com
-access.sec-dojo.com
-bo-cyberlab.sec-dojo.com

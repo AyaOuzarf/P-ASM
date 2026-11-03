@@ -1,176 +1,32 @@
 [
   {
-    "subdomain": "macc26.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "sentry.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "ecowas-hackathon.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "bo-account.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "axa-hackshield-hackathon.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "cyberchef.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "vpn.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "cyber-awareness.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "bo-cyberwar.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "cyberlearn.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "bo-support.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "www.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "jet.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "postiz.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "ip.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "rra.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "login.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
     "subdomain": "sec-dojo.com",
     "domain": "sec-dojo.com",
     "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "bo-cyberlab.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "cyberlab.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "bo-cyberlearn.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "account.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "africa-ctf.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "access.sec-dojo.com",
-    "domain": "sec-dojo.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
+    "discovered_at": "2026-10-18T12:53:06.757568+00:00"
   },
   {
     "subdomain": "secdojo.com",
     "domain": "secdojo.com",
     "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
+    "discovered_at": "2026-10-18T12:53:06.757568+00:00"
   },
   {
     "subdomain": "sekera-group.com",
     "domain": "sekera-group.com",
     "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
-  },
-  {
-    "subdomain": "www.sekera-group.com",
-    "domain": "sekera-group.com",
-    "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
+    "discovered_at": "2026-10-18T12:53:06.757568+00:00"
   },
   {
     "subdomain": "vinci-logic.com",
     "domain": "vinci-logic.com",
     "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
+    "discovered_at": "2026-10-18T12:53:06.757568+00:00"
   },
   {
     "subdomain": "vincilogic.com",
     "domain": "vincilogic.com",
     "source": "amass",
-    "discovered_at": "2026-07-30T20:14:16.571311+00:00"
+    "discovered_at": "2026-10-18T12:53:06.757568+00:00"
   }
 ]

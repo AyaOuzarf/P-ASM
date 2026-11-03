@@ -1,0 +1,5 @@
+gitlab.sekera-group.com
+hub.sekera-group.com
+odoo.sekera-group.com
+registry.sekera-group.com
+www.sekera-group.com

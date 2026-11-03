@@ -82,7 +82,7 @@ def compute_verifiable_risk(
     subdomain: str,
     base_exposure: int = 1,
     base_sensitivity: int = 1,
-    base_justification: str = "Sous-domaine standard, pas de motif sensible detecte",
+    base_justification: str = "Standard subdomain; no sensitive naming pattern detected",
     takeover: Optional[Dict[str, Any]] = None,
     cve_findings: Optional[Iterable[Dict[str, Any]]] = None,
     cert_info: Optional[Dict[str, Any]] = None,
@@ -105,10 +105,10 @@ def compute_verifiable_risk(
         initial_score = max(initial_score, 9)
         evidence_sources.append("subdomain_takeover")
         reason_parts.append(
-            "RISQUE SUBDOMAIN TAKEOVER : CNAME vers "
-            f"{takeover.get('cname_target', 'inconnu')}"
+            "POTENTIAL SUBDOMAIN TAKEOVER RISK: CNAME points to "
+            f"{takeover.get('cname_target', 'unknown')}"
             + (f" ({takeover.get('service_hint')})" if takeover.get("service_hint") else "")
-            + f" - signaux : {', '.join(takeover.get('signals', []))}"
+            + f" - signals: {', '.join(takeover.get('signals', []))}"
         )
 
     cve_items = _cve_evidence_items(cve_findings)
@@ -125,15 +125,15 @@ def compute_verifiable_risk(
                     default={},
                 )
                 reason_parts.append(
-                    f"CVE potentielle : {top.get('cve_id', 'inconnue')} (CVSS {max_cvss}) "
-                    f"sur {top.get('service') or 'service inconnu'} -- "
+                    f"Potential CVE: {top.get('cve_id', 'unknown')} (CVSS {max_cvss}) "
+                    f"on {top.get('service') or 'unknown service'} -- "
                     f"{(top.get('description') or '')[:150]}"
                 )
         # Known exploit signals can raise the score even if CVSS is moderate.
         for item in cve_items:
             if _contains_known_exploit(item):
                 initial_score = max(initial_score, 8)
-                reason_parts.append(f"Signal d'exploitation connue : {item.get('cve_id')}")
+                reason_parts.append(f"Known exploitation signal: {item.get('cve_id')}")
                 evidence_sources.append("known_exploit_signal")
                 break
 
@@ -142,7 +142,7 @@ def compute_verifiable_risk(
         # especially on a sensitive subdomain, even without a vulnerability.
         if cert_info.get("active") is False:
             initial_score = max(initial_score, 6)
-            reason_parts.append("Certificat expiré ou non actif : signal de mauvaise posture TLS")
+            reason_parts.append("Certificate expired or inactive: potential weak TLS posture")
             evidence_sources.append("certificate")
 
     score = max(1, min(9, int(initial_score)))
@@ -177,14 +177,14 @@ def calculate_enterprise_risk(
     exposure: int = 1,
     verified_cves: Optional[Iterable[Dict[str, Any]]] = None,
     takeover_risk: Optional[Dict[str, Any]] = None,
-    cert_active: bool = True,
+    cert_active: Optional[bool] = None,
 ) -> Dict[str, Any]:
     """Compute a single enterprise risk score from verified evidence.
 
     Formula:
       0.45 * asset_criticality
     + 0.25 * exposure
-    + 0.30 * max_cvss_component
+    + 0.30 * max_cvss
     + 0.20 * kev_component
     + 0.15 * epss_component
     + 0.10 * certificate_penalty
@@ -198,19 +198,24 @@ def calculate_enterprise_risk(
     cves = list(verified_cves or [])
 
     max_cvss = max((float(item.get("cvss_score", 0)) for item in cves if item.get("cvss_score") is not None), default=0.0)
-    kev_flag = any("kev" in (item.get("source") or []) or item.get("cve_id", "").upper().startswith("CVE-") for item in cves)
+    kev_sources = {"kev", "cisa_kev"}
+    kev_flag = any(
+        source.strip().lower() in kev_sources
+        for item in cves
+        for source in ([item["source"]] if isinstance(item.get("source"), str) else item.get("source") or [])
+        if isinstance(source, str)
+    )
     epss_max = max((float(item.get("epss_score", 0)) for item in cves if item.get("epss_score") is not None), default=0.0)
 
-    cvss_component = max_cvss / 10.0
     kev_component = 1.0 if kev_flag else 0.0
     epss_component = min(1.0, epss_max)
-    certificate_penalty = 0.0 if cert_active else 1.0
+    certificate_penalty = 1.0 if cert_active is False else 0.0
     takeover_penalty = 1.0 if takeover_risk else 0.0
 
     weighted_score = (
         (0.45 * crit)
         + (0.25 * expos)
-        + (0.30 * cvss_component * 5.0)
+        + (0.30 * max_cvss)
         + (0.20 * kev_component * 5.0)
         + (0.15 * epss_component * 5.0)
         + (0.10 * certificate_penalty * 5.0)
@@ -234,7 +239,7 @@ def calculate_enterprise_risk(
         )
     if takeover_risk:
         justification.append("Takeover risk observed")
-    if not cert_active:
+    if cert_active is False:
         justification.append("Certificate inactive/expired")
     if not cves:
         justification.append("No verified public vulnerability evidence found")

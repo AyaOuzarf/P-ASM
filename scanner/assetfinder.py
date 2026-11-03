@@ -1,11 +1,10 @@
 import subprocess
 import os
 
-SCANS_DIR = os.path.join(os.path.dirname(__file__), "scans")
+SCANS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scans")
 
 
 def run_assetfinder(domain):
-    os.makedirs(SCANS_DIR, exist_ok=True)
     output_file = os.path.join(SCANS_DIR, f"assetfinder_{domain}.txt")
 
     with open(output_file, "w") as f:
